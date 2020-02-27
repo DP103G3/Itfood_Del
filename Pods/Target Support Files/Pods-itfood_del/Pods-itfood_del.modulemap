@@ -1,0 +1,6 @@
+framework module Pods_itfood_del {
+  umbrella header "Pods-itfood_del-umbrella.h"
+
+  export *
+  module * { export * }
+}
