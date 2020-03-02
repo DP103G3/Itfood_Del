@@ -1,6 +1,0 @@
-framework module Pods_itfood_del_itfood_delUITests {
-  umbrella header "Pods-itfood_del-itfood_delUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
