@@ -18,7 +18,7 @@ public struct OrderItemView: View {
     var userLatitude: String {
         return "\(locationManager.lastLocation?.coordinate.latitude ?? 0)"
     }
-
+    
     var userLongitude: String {
         return "\(locationManager.lastLocation?.coordinate.longitude ?? 0)"
     }
@@ -27,50 +27,55 @@ public struct OrderItemView: View {
         Group {
             // MARK: 待接單訂單
             if order.order_state == 1 || order.order_state == 2 {
-                NavigationLink(destination: MapView(order: order).edgesIgnoringSafeArea(.all) ){
-                    HStack {
-                        VStack {
-                            VStack(alignment: .leading){
-                                HStack {
-                                    Text("From: ")
+                
+                HStack {
+                    VStack {
+                        VStack(alignment: .leading){
+                            HStack {
+                                Text("From: ")
+                                    .background(Color.primary)
+                                    .foregroundColor(.red)
+                                    .font(.caption)
+                                    .padding(4)
+                                
+                                VStack(alignment: .center){
+                                    Text(order.shop.name)
                                         .font(.caption)
+                                        .bold()
                                         .padding(4)
-                                    VStack(alignment: .center){
-                                        Text(order.shop.name)
-                                            .font(.caption)
-                                            .bold()
-                                            .padding(4)
-                                        Text(order.shop.address)
-                                            .padding(4)
-                                    }.tag("fromInfo")
-                                }
+                                    Text(order.shop.address)
+                                        .padding(4)
+                                }.tag("fromInfo")
+                            }
+                            
+                        }
+                        Spacer()
+                        VStack(alignment: .leading){
+                            HStack {
+                                Text("To: ")
+                                    .foregroundColor(.green)
+                                    .font(.caption)
+                                    .padding(4)
+                                
+                                
+                                Text(order.address.info)
+                                    .padding(4)
                                 
                             }
-                            Spacer()
-                            VStack(alignment: .leading){
-                                HStack {
-                                    Text("To: ")
-                                        .font(.caption)
-                                        .padding(4)
-                                    
-                                    Text(order.address.info)
-                                        .padding(4)
-                                    
-                                }
-                            }
                         }
-                        Spacer()
-                        VStack(alignment: .center) {
-                            Text("距離").font(.title)
-                                .padding(.bottom, 6)
-                            HStack {
-                                Text (distance)
-                                Text (distanceUnit)
-                            }
-                        }
-                        Spacer()
                     }
+                    Spacer()
+                    VStack(alignment: .center) {
+                        Text("距離").font(.title)
+                            .padding(.bottom, 6)
+                        HStack {
+                            Text (distance)
+                            Text (distanceUnit)
+                        }
+                    }
+                    Spacer()
                 }
+                
             } else if order.order_state == 3 {
                 
             }

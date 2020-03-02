@@ -14,7 +14,7 @@ import CoreLocation
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var orderList = OrderList()
+    var userData = UserData()
     var localManager = LocationManager()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         let loginView = LoginView(loginSuccessful: false)
-            .environmentObject(orderList)
+            .environmentObject(userData)
             .environmentObject(localManager)
             .environment(\.managedObjectContext, context)
 
@@ -47,6 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+        userData.webSocketTask?.cancel(with: .goingAway, reason: nil)
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -71,6 +72,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
         
     }
+    
+    
     
     
     

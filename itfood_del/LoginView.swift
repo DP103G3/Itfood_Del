@@ -9,7 +9,9 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var userData: UserData
     @State var loginSuccessful : Bool
+    
     var body: some View {
         
         return Group {
@@ -18,7 +20,10 @@ struct LoginView: View {
              */
             if !loginSuccessful {
                 Button(action: {
+                    UserDefaults.standard.set(1, forKey: "del_id")
+                    self.userData.del_id = 1
                     self.loginSuccessful = true
+                    
                 } ){
                     Text("Login")
                 }

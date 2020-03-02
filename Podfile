@@ -6,6 +6,7 @@ target 'itfood_del' do
   use_frameworks!
 
   # Pods for itfood_del
+	pod 'Starscream'
 
   target 'itfood_delTests' do
     inherit! :search_paths

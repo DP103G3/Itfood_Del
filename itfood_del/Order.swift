@@ -8,11 +8,40 @@
 
 import Foundation
 
-let url = "http://10.0.2.2:8080/Itfood_Web/"
+let url = "http://10.0.2.2:8080/Itfood_Web/del"
 
-class OrderList : ObservableObject {
-    @Published var orders : [Order] = []
-    @Published var sortedOrdersArray : [[Order]] = [[Order](), [Order](), [Order]()]
+class UserData : ObservableObject {
+    @Published var webSocketTask : URLSessionWebSocketTask?
+    @Published var orders : [Order] = [] {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    @Published var sortedOrdersArray : [[Order]] = [[Order](), [Order](), [Order]()] {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    @Published var viewTypes : Int? {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    @Published var isOnline : Bool = false {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    @Published var followUser: Bool = false {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    @Published var del_id : Int = 0 {
+        willSet {
+            objectWillChange.send()
+        }
+    }
     
     var queueingOrders : [Order] {
         get {
@@ -35,6 +64,11 @@ class OrderList : ObservableObject {
             }
         }
     }
+}
+
+struct OrderMessage : Codable {
+    var order : Order
+    var receiver: String
 }
 
 struct Order : Codable, Hashable{
@@ -84,6 +118,7 @@ enum URLs : Hashable {
     case OrderDetail
     case Member
     case Delivery
+    case OrderSocket
     
     func getURL() -> String {
         switch self {
@@ -97,6 +132,8 @@ enum URLs : Hashable {
             return  "http://127.0.0.1:8080/Itfood_Web/OrderDetailServlet"
         case .Member:
             return  "http://127.0.0.1:8080/Itfood_Web/MemberServlet"
+        case .OrderSocket:
+            return "ws://127.0.0.1:8080/Itfood_Web/OrderSocket/"
         }
     }
 }

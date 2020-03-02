@@ -11,20 +11,30 @@ import CoreData
 import CoreLocation
 
 struct ContentView: View {
-    @EnvironmentObject var orderList : OrderList
+    @EnvironmentObject var userData : UserData
     var locationManager = CLLocationManager()
     init() {
         UITabBar.appearance().barTintColor = UIColor(named: "colorPrimary")
     }
     var body: some View {
         TabView{
-            //MARK: 訂單Tab
-            OrderView(selectedIndex: 0).tabItem {
+            
+            //MARK: 接單中心Tab
+            DeliveryView(selectedIndex: 0).tabItem {
                 VStack{
-                    Image(systemName: "folder")
-                    Text("訂單")
+                    Image(systemName: "car.fill")
+                    Text("接單中心")
                 }
             }.tag(1)
+            
+            //MARK: 過去訂單Tab
+            PastOrdersView().tabItem {
+                VStack {
+                    Image(systemName: "folder")
+                    Text("過去訂單")
+                }
+            }
+            
             
             //MARK: 結算報表Tab
             Text("Tab Content 2").tabItem {
@@ -50,9 +60,10 @@ struct ContentView: View {
      進入主頁面時向伺服器請求該外送員的訂單
      */
     func loadOrders(){
+        
             let urlStr = URLs.Order
             if let url = URL(string: urlStr.getURL()){
-                let body = ["action": "findByDeliveryId", "del_id": "1"]
+                let body = ["action": "findByDeliveryId", "del_id": userData.del_id.description]
                 let encoder = JSONEncoder()
                 let decoder = JSONDecoder()
                 let dateFormat = DateFormatter()
@@ -73,7 +84,7 @@ struct ContentView: View {
                             if !decodeJson.isEmpty {
                                 DispatchQueue.main.async {
 //                                    self.orderList.objectWillChange.send()
-                                    self.orderList.orders = decodeJson
+                                    self.userData.orders = decodeJson
                                     self.sortOrders()
                                     
     //                                print(decodeJson)
@@ -97,7 +108,7 @@ struct ContentView: View {
         completedOrders : 已完成 （已完成 / 已取消）
      */
         func sortOrders() {
-            let orders = orderList.orders
+            let orders = userData.orders
             let queueingOrders = orders.filter { (order) -> Bool in
                 order.order_state == 1 || order.order_state == 2
             }
@@ -108,9 +119,9 @@ struct ContentView: View {
                 order.order_state == 4 || order.order_state == 5
             })
 //            self.orderList.objectWillChange.send()
-            orderList.sortedOrdersArray[0] = queueingOrders
-            orderList.sortedOrdersArray[1] = deliveringOrders
-            orderList.sortedOrdersArray[2] = completedOrders
+            userData.sortedOrdersArray[0] = queueingOrders
+            userData.sortedOrdersArray[1] = deliveringOrders
+            userData.sortedOrdersArray[2] = completedOrders
         }
     func showLocationRequest () {
         locationManager.requestWhenInUseAuthorization()
