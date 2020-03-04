@@ -19,6 +19,12 @@
 		BB17E42C24066BB30071B620 /* itfood_del.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB17E42A24066BB30071B620 /* itfood_del.xcdatamodeld */; };
 		BB17E42E24066DA20071B620 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17E42D24066DA20071B620 /* MapView.swift */; };
 		BB17E430240671560071B620 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB17E42F240671560071B620 /* LocationManager.swift */; };
+		BB451CF2240E3E82002525B9 /* ViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB451CF1240E3E82002525B9 /* ViewService.swift */; };
+		BB451CF8240F56B1002525B9 /* OrderItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */; };
+		BB742A7F240DF6410089D068 /* AreaOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB742A7E240DF6410089D068 /* AreaOrders.swift */; };
+		BB742A81240DF6A20089D068 /* DeliveryMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB742A80240DF6A20089D068 /* DeliveryMessage.swift */; };
+		BB742A87240DFF9C0089D068 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB742A86240DFF9C0089D068 /* SocketService.swift */; };
+		BBA00632240D003F0067F6B9 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA00631240D003F0067F6B9 /* UserData.swift */; };
 		BBB3E70224052A5E0096C9F5 /* exampleOrders.json in Resources */ = {isa = PBXBuildFile; fileRef = BBB3E70124052A5E0096C9F5 /* exampleOrders.json */; };
 		BBB3E70424052C8A0096C9F5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB3E70324052C8A0096C9F5 /* Data.swift */; };
 		CD5548F123FE833F00B902E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5548F023FE833F00B902E9 /* AppDelegate.swift */; };
@@ -42,6 +48,12 @@
 		BB17E42B24066BB30071B620 /* itfood_del.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = itfood_del.xcdatamodel; sourceTree = "<group>"; };
 		BB17E42D24066DA20071B620 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		BB17E42F240671560071B620 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		BB451CF1240E3E82002525B9 /* ViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewService.swift; sourceTree = "<group>"; };
+		BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemViewModel.swift; sourceTree = "<group>"; };
+		BB742A7E240DF6410089D068 /* AreaOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOrders.swift; sourceTree = "<group>"; };
+		BB742A80240DF6A20089D068 /* DeliveryMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryMessage.swift; sourceTree = "<group>"; };
+		BB742A86240DFF9C0089D068 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
+		BBA00631240D003F0067F6B9 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		BBB3E70124052A5E0096C9F5 /* exampleOrders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exampleOrders.json; sourceTree = "<group>"; };
 		BBB3E70324052C8A0096C9F5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		CD5548ED23FE833F00B902E9 /* itfood_del.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itfood_del.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +93,38 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BBA00633240D10000067F6B9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BBB3E70324052C8A0096C9F5 /* Data.swift */,
+				BB17E42F240671560071B620 /* LocationManager.swift */,
+				BB07BB042403899500ADBE24 /* Order.swift */,
+				BB07BB0624038A6600ADBE24 /* Shop.swift */,
+				BBA00631240D003F0067F6B9 /* UserData.swift */,
+				BB15F15D240A5186005D2FCC /* Color.swift */,
+				BB742A7E240DF6410089D068 /* AreaOrders.swift */,
+				BB742A80240DF6A20089D068 /* DeliveryMessage.swift */,
+				BB742A86240DFF9C0089D068 /* SocketService.swift */,
+				BB451CF1240E3E82002525B9 /* ViewService.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BBA00634240D10390067F6B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BB17E42D24066DA20071B620 /* MapView.swift */,
+				BB07BB0824038BE000ADBE24 /* DeliveryView.swift */,
+				BB15F161240A6291005D2FCC /* PastOrdersView.swift */,
+				BB15F15724079FFA005D2FCC /* LoginView.swift */,
+				CD5548F423FE833F00B902E9 /* ContentView.swift */,
+				BB15F15B240A4BBD005D2FCC /* MapQueueingOrderView.swift */,
+				BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */,
+				BB07BB0E2404D57D00ADBE24 /* OrderItemView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		BBB3E70024052A150096C9F5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,26 +154,16 @@
 		CD5548EF23FE833F00B902E9 /* itfood_del */ = {
 			isa = PBXGroup;
 			children = (
+				BBA00634240D10390067F6B9 /* Views */,
+				BBA00633240D10000067F6B9 /* Models */,
 				CD5548F023FE833F00B902E9 /* AppDelegate.swift */,
 				CD5548F223FE833F00B902E9 /* SceneDelegate.swift */,
-				BB07BB0624038A6600ADBE24 /* Shop.swift */,
-				BBB3E70324052C8A0096C9F5 /* Data.swift */,
-				BB07BB042403899500ADBE24 /* Order.swift */,
-				BB17E42D24066DA20071B620 /* MapView.swift */,
-				BB07BB0824038BE000ADBE24 /* DeliveryView.swift */,
-				CD5548F423FE833F00B902E9 /* ContentView.swift */,
 				CD5548F623FE834100B902E9 /* Assets.xcassets */,
 				BB17E42A24066BB30071B620 /* itfood_del.xcdatamodeld */,
 				CD5548FB23FE834100B902E9 /* LaunchScreen.storyboard */,
 				CD5548FE23FE834100B902E9 /* Info.plist */,
 				BBB3E70024052A150096C9F5 /* Resources */,
 				CD5548F823FE834100B902E9 /* Preview Content */,
-				BB15F161240A6291005D2FCC /* PastOrdersView.swift */,
-				BB07BB0E2404D57D00ADBE24 /* OrderItemView.swift */,
-				BB17E42F240671560071B620 /* LocationManager.swift */,
-				BB15F15724079FFA005D2FCC /* LoginView.swift */,
-				BB15F15D240A5186005D2FCC /* Color.swift */,
-				BB15F15B240A4BBD005D2FCC /* MapQueueingOrderView.swift */,
 			);
 			path = itfood_del;
 			sourceTree = "<group>";
@@ -214,18 +248,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB742A87240DFF9C0089D068 /* SocketService.swift in Sources */,
 				CD5548F123FE833F00B902E9 /* AppDelegate.swift in Sources */,
 				BB15F162240A6291005D2FCC /* PastOrdersView.swift in Sources */,
+				BBA00632240D003F0067F6B9 /* UserData.swift in Sources */,
+				BB451CF8240F56B1002525B9 /* OrderItemViewModel.swift in Sources */,
 				CD5548F323FE833F00B902E9 /* SceneDelegate.swift in Sources */,
+				BB742A81240DF6A20089D068 /* DeliveryMessage.swift in Sources */,
 				BB07BB052403899500ADBE24 /* Order.swift in Sources */,
 				BB15F15C240A4BBD005D2FCC /* MapQueueingOrderView.swift in Sources */,
 				BB17E430240671560071B620 /* LocationManager.swift in Sources */,
 				BB07BB0924038BE000ADBE24 /* DeliveryView.swift in Sources */,
 				BB07BB0724038A6600ADBE24 /* Shop.swift in Sources */,
+				BB742A7F240DF6410089D068 /* AreaOrders.swift in Sources */,
 				BB17E42C24066BB30071B620 /* itfood_del.xcdatamodeld in Sources */,
 				BB07BB0F2404D57E00ADBE24 /* OrderItemView.swift in Sources */,
 				BB15F15E240A5186005D2FCC /* Color.swift in Sources */,
 				BB15F15824079FFA005D2FCC /* LoginView.swift in Sources */,
+				BB451CF2240E3E82002525B9 /* ViewService.swift in Sources */,
 				BB17E42E24066DA20071B620 /* MapView.swift in Sources */,
 				CD5548F523FE833F00B902E9 /* ContentView.swift in Sources */,
 				BBB3E70424052C8A0096C9F5 /* Data.swift in Sources */,

@@ -11,7 +11,7 @@ import Foundation
 struct Shop : Codable, Hashable{
     let id : Int
     let name : String
-    let phone : String
+    let phone : String?
     let address : String
     let latitude : Double
     let longitude : Double

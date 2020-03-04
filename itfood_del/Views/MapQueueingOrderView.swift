@@ -16,7 +16,6 @@ struct MapQueueingOrderView: View {
                     HStack{
                         VStack{
                             HStack{
-                                
                                 Text("出發地")
                                     .bold()
                                     .foregroundColor(Color.white)
@@ -55,11 +54,6 @@ struct MapQueueingOrderView: View {
                             
                         }
                     }
-                    
-                    
-                    
-                    
-                    
                     Button(action: {
                         print("HI")
                     }) {
@@ -73,17 +67,8 @@ struct MapQueueingOrderView: View {
                         .foregroundColor(Color.colorTextOnS)
                         .background(Color.colorSecondary)
                         .cornerRadius(12)
-                    
-                    
-                    
-                    
                 }.padding()
-                
-                
             }
-            
-            
-            
         }
     }
 }
