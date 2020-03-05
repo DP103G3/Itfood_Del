@@ -159,14 +159,14 @@
 				BBA00634240D10390067F6B9 /* Views */,
 				BBA00633240D10000067F6B9 /* Models */,
 				CD555E69240D0D4300EE4155 /* StatsView.swift */,
+				CD555E6E240DF92F00EE4155 /* Url.swift */,
+				CD555E70240E095D00EE4155 /* Common.swift */,
 				CD5548F623FE834100B902E9 /* Assets.xcassets */,
 				BB17E42A24066BB30071B620 /* itfood_del.xcdatamodeld */,
 				CD5548FB23FE834100B902E9 /* LaunchScreen.storyboard */,
 				CD5548FE23FE834100B902E9 /* Info.plist */,
 				BBB3E70024052A150096C9F5 /* Resources */,
 				CD5548F823FE834100B902E9 /* Preview Content */,
-				CD555E6E240DF92F00EE4155 /* Url.swift */,
-				CD555E70240E095D00EE4155 /* Common.swift */,
 			);
 			path = itfood_del;
 			sourceTree = "<group>";
