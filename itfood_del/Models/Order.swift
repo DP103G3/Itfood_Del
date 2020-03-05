@@ -10,61 +10,7 @@ import Foundation
 
 let url = "http://10.0.2.2:8080/Itfood_Web/del"
 
-class UserData : ObservableObject {
-    @Published var webSocketTask : URLSessionWebSocketTask?
-    @Published var orders : [Order] = [] {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    @Published var sortedOrdersArray : [[Order]] = [[Order](), [Order](), [Order]()] {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    @Published var viewTypes : Int? {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    @Published var isOnline : Bool = false {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    @Published var followUser: Bool = false {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    @Published var del_id : Int = 0 {
-        willSet {
-            objectWillChange.send()
-        }
-    }
-    
-    var queueingOrders : [Order] {
-        get {
-            return orders.filter { (order) -> Bool in
-                order.order_state == 1 || order.order_state == 2
-            }
-        }
-    }
-    var deliveringOrders : [Order] {
-        get {
-            return orders.filter { (order) -> Bool in
-                order.order_state == 3
-            }
-        }
-    }
-    var completedOrders : [Order] {
-        get{
-            return orders.filter { (order) -> Bool in
-                order.order_state == 4 || order.order_state == 5
-            }
-        }
-    }
-}
+
 
 struct OrderMessage : Codable {
     var order : Order
@@ -89,12 +35,12 @@ struct Order : Codable, Hashable{
     let order_type : Int
     let orderDetails : [OrderDetail]?
     
+    var isExpanded: Bool?
+    
 
     func description () -> String{
         "{id: " + order_id.description + "\nshop_name: " + shop.name + "}\n"
     }
-    
-
 }
 
 struct OrderDetail : Codable, Hashable{
@@ -119,6 +65,7 @@ enum URLs : Hashable {
     case Member
     case Delivery
     case OrderSocket
+    case DeliverySocket
     
     func getURL() -> String {
         switch self {
@@ -133,7 +80,9 @@ enum URLs : Hashable {
         case .Member:
             return  "http://127.0.0.1:8080/Itfood_Web/MemberServlet"
         case .OrderSocket:
-            return "ws://127.0.0.1:8080/Itfood_Web/OrderSocket/"
+            return "ws://127.0.0.1:8080/Itfood_Web/OrderSocket/del"
+        case .DeliverySocket:
+            return "ws://127.0.0.1:8080/Itfood_Web/DeliverySocket/del"
         }
     }
 }

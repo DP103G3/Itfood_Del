@@ -21,14 +21,15 @@ struct LoginView: View {
             if !loginSuccessful {
                 Button(action: {
                     UserDefaults.standard.set(1, forKey: "del_id")
+                    UserDefaults.standard.set(1, forKey: "areaCode")
                     self.userData.del_id = 1
                     self.loginSuccessful = true
                     
                 } ){
                     Text("Login")
-                }
+                }.animation(.default)
             } else {
-                ContentView()
+                ContentView().animation(.default)
                     
             }
         }
