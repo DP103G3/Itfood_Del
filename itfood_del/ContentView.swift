@@ -37,7 +37,7 @@ struct ContentView: View {
             
             
             //MARK: 結算報表Tab
-            Text("Tab Content 2").tabItem {
+            StatsView(id: 1).tabItem {
                 VStack {
                     Image(systemName: "calendar")
                     Text("結算報表")
@@ -129,10 +129,10 @@ struct ContentView: View {
     
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
 
 

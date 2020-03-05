@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,10 @@
 		CD5548F723FE834100B902E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5548F623FE834100B902E9 /* Assets.xcassets */; };
 		CD5548FA23FE834100B902E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5548F923FE834100B902E9 /* Preview Assets.xcassets */; };
 		CD5548FD23FE834100B902E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5548FB23FE834100B902E9 /* LaunchScreen.storyboard */; };
+		CD555E6A240D0D4300EE4155 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD555E69240D0D4300EE4155 /* StatsView.swift */; };
+		CD555E6D240D22AA00EE4155 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = CD555E6C240D22AA00EE4155 /* Charts */; };
+		CD555E6F240DF92F00EE4155 /* Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD555E6E240DF92F00EE4155 /* Url.swift */; };
+		CD555E71240E095D00EE4155 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD555E70240E095D00EE4155 /* Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +56,9 @@
 		CD5548F923FE834100B902E9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CD5548FC23FE834100B902E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD5548FE23FE834100B902E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD555E69240D0D4300EE4155 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		CD555E6E240DF92F00EE4155 /* Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Url.swift; sourceTree = "<group>"; };
+		CD555E70240E095D00EE4155 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,19 +67,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB17E403240666640071B620 /* MapKit.framework in Frameworks */,
+				CD555E6D240D22AA00EE4155 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		331AACB269F3A58DA6905D26 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		BB17E401240666640071B620 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,7 +96,6 @@
 				CD5548EF23FE833F00B902E9 /* itfood_del */,
 				CD5548EE23FE833F00B902E9 /* Products */,
 				BB17E401240666640071B620 /* Frameworks */,
-				331AACB269F3A58DA6905D26 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,6 +117,7 @@
 				BB07BB042403899500ADBE24 /* Order.swift */,
 				BB17E42D24066DA20071B620 /* MapView.swift */,
 				BB07BB0824038BE000ADBE24 /* DeliveryView.swift */,
+				CD555E69240D0D4300EE4155 /* StatsView.swift */,
 				CD5548F423FE833F00B902E9 /* ContentView.swift */,
 				CD5548F623FE834100B902E9 /* Assets.xcassets */,
 				BB17E42A24066BB30071B620 /* itfood_del.xcdatamodeld */,
@@ -130,6 +131,8 @@
 				BB15F15724079FFA005D2FCC /* LoginView.swift */,
 				BB15F15D240A5186005D2FCC /* Color.swift */,
 				BB15F15B240A4BBD005D2FCC /* MapQueueingOrderView.swift */,
+				CD555E6E240DF92F00EE4155 /* Url.swift */,
+				CD555E70240E095D00EE4155 /* Common.swift */,
 			);
 			path = itfood_del;
 			sourceTree = "<group>";
@@ -158,6 +161,9 @@
 			dependencies = (
 			);
 			name = itfood_del;
+			packageProductDependencies = (
+				CD555E6C240D22AA00EE4155 /* Charts */,
+			);
 			productName = itfood_del;
 			productReference = CD5548ED23FE833F00B902E9 /* itfood_del.app */;
 			productType = "com.apple.product-type.application";
@@ -186,6 +192,9 @@
 				Base,
 			);
 			mainGroup = CD5548E423FE833F00B902E9;
+			packageReferences = (
+				CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = CD5548EE23FE833F00B902E9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -218,6 +227,8 @@
 				BB15F162240A6291005D2FCC /* PastOrdersView.swift in Sources */,
 				CD5548F323FE833F00B902E9 /* SceneDelegate.swift in Sources */,
 				BB07BB052403899500ADBE24 /* Order.swift in Sources */,
+				CD555E71240E095D00EE4155 /* Common.swift in Sources */,
+				CD555E6A240D0D4300EE4155 /* StatsView.swift in Sources */,
 				BB15F15C240A4BBD005D2FCC /* MapQueueingOrderView.swift in Sources */,
 				BB17E430240671560071B620 /* LocationManager.swift in Sources */,
 				BB07BB0924038BE000ADBE24 /* DeliveryView.swift in Sources */,
@@ -227,6 +238,7 @@
 				BB15F15E240A5186005D2FCC /* Color.swift in Sources */,
 				BB15F15824079FFA005D2FCC /* LoginView.swift in Sources */,
 				BB17E42E24066DA20071B620 /* MapView.swift in Sources */,
+				CD555E6F240DF92F00EE4155 /* Url.swift in Sources */,
 				CD5548F523FE833F00B902E9 /* ContentView.swift in Sources */,
 				BBB3E70424052C8A0096C9F5 /* Data.swift in Sources */,
 			);
@@ -340,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CD555E6C240D22AA00EE4155 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		BB17E42A24066BB30071B620 /* itfood_del.xcdatamodeld */ = {

@@ -38,6 +38,11 @@
 		<string>MKDirectionsModeBike</string>
 		<string>MKDirectionsModeCar</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>請提供您的位置，讓本應用程式定位功能能夠順利執行</string>
 	<key>UIApplicationSceneManifest</key>
