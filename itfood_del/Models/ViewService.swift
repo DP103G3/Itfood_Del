@@ -13,7 +13,8 @@ class ViewService: ObservableObject {
     @Published var connectToSocket = false
     @Published var queueingOrders = [Order]()
     @Published var deliveringOrders = [Order]()
-    @Published var confirmOrder = false
+    @Published var showQRCodeSheet = false
+    @Published var showAcceptSuccessAlert = false
     
     private let TAG = "TAG_ViewService"
     private let service = SocketService()
@@ -50,7 +51,10 @@ class ViewService: ObservableObject {
                                 print(self.TAG + "DeliveryMessage: " + (deliveryMessage.action ?? ""))
                                 let action = deliveryMessage.action
                                 if action == "confirmOrder" {
-                                    self.confirmOrder = true
+                                    self.objectWillChange.send()
+                                    self.showQRCodeSheet = false
+//                                    self.objectWillChange.send()
+                                    self.showAcceptSuccessAlert = true
                                 }
                                 let order = deliveryMessage.order
                                 for o: Order in self.deliveringOrders {
@@ -80,20 +84,20 @@ class ViewService: ObservableObject {
         //        service.sendFetchOrdersRequest()
     }
     
-    private var confirmOrderPublisher: AnyPublisher<Bool, Never> {
-        $confirmOrder
-            .debounce(for: 0, scheduler: RunLoop.main)
-            .removeDuplicates()
-            .map { confirm in
-                var showing = false
-                if confirm {
-                    showing = false
-                } else {
-                    showing = true
-                }
-                return showing
-        }.eraseToAnyPublisher()
-    }
+//    private var confirmOrderPublisher: AnyPublisher<Bool, Never> {
+//        $confirmOrder
+//            .debounce(for: 0, scheduler: RunLoop.main)
+//            .removeDuplicates()
+//            .map { confirm in
+//                var showing = false
+//                if confirm {
+//                    showing = false
+//                } else {
+//                    showing = true
+//                }
+//                return showing
+//        }.eraseToAnyPublisher()
+//    }
     
     private var connectToSocketPublisher: AnyPublisher<Bool, Never> {
         $connectToSocket
@@ -126,7 +130,7 @@ class ViewService: ObservableObject {
         let userDefaults = UserDefaults.standard
         let areaCode = userDefaults.integer(forKey: "areaCode")
         let del_id = userDefaults.integer(forKey: "del_id")
-        let deliveryMessage = DeliveryMessage(action: "deliveryCompleteOrder", order: order, areaCode: areaCode, sender: "del" + del_id.description, receiver: "shop" + order.shop.id.description)
+        let deliveryMessage = DeliveryMessage(action: "deliveryCompleteOrder", order: order, areaCode: areaCode, sender: "del" + del_id.description, receiver: "mem" + order.mem_id.description)
         service.sendDeliveryMessage(deliveryMassage: deliveryMessage)
     }
     

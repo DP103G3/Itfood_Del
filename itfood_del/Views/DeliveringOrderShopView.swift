@@ -14,6 +14,8 @@ struct DeliveringOrderShopView: View {
     @ObservedObject var viewService: ViewService
     @State private var showCompleteOrderAlert = false
     @State private var showCompleteOrderSheet = false
+    @State private var showAcceptSuccessAlert = false
+    @State private var showAcceptFailureAlert = false
     
     var body: some View {
         VStack {
@@ -67,6 +69,10 @@ struct DeliveringOrderShopView: View {
                 .padding(.bottom, 4)
                 .padding(.top, 4)
                 .padding(.bottom, 4)
+                .alert(isPresented: $viewService.showAcceptSuccessAlert) {
+                        Alert(title: Text("收餐成功！"))
+                }
+                
             
             if presentButton {
                 Divider()
@@ -83,7 +89,7 @@ struct DeliveringOrderShopView: View {
                         .padding(.trailing)
                         .padding(.bottom, 4)
                         .onTapGesture {
-                            self.showCompleteOrderAlert.toggle()
+                            self.showCompleteOrderAlert = true
                     }
                 }
             }
@@ -94,12 +100,14 @@ struct DeliveringOrderShopView: View {
                     orderDetails.append("\n" + orderDetail.dish.name + " x" + orderDetail.od_count.description + "\n")
                 }
                 return Alert(title: Text("確認餐點"), message: Text(orderDetails), primaryButton: .default(Text("確認"), action: {
-                    self.showCompleteOrderSheet.toggle()
+                    self.viewService.objectWillChange.send()
+                    self.viewService.showQRCodeSheet = true
                 }), secondaryButton: .cancel())
         }
-        .sheet(isPresented: $showCompleteOrderSheet) {
+        .sheet(isPresented: $viewService.showQRCodeSheet) {
             OrderQRCodeView(order: self.order, viewService: self.viewService)
         }
+        
     }
 }
 
@@ -108,7 +116,7 @@ struct OrderQRCodeView: View {
     var encoder = JSONEncoder()
     @State var uiImage: UIImage?
     let ciContext = CIContext()
-//    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewService: ViewService
     @State private var order_id: String?
     @State private var del_name: String?
@@ -120,6 +128,7 @@ struct OrderQRCodeView: View {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         encoder.dateEncodingStrategy = .formatted(dateFormatter)
         if let data = try? encoder.encode(order) {
+            print("ORDER QR CODE: " + (String(data: data, encoding: .utf8) ?? ""))
             guard let ciFilter = CIFilter(name: "CIQRCodeGenerator") else {return}
             ciFilter.setValue(data, forKey: "inputMessage")
             guard let ciImage_smallQR = ciFilter.outputImage else {return}
@@ -139,9 +148,6 @@ struct OrderQRCodeView: View {
             }
         }
         
-//        if viewService.confirmOrder {
-//            self.presentationMode.wrappedValue.dismiss()
-//        }
     }
     
     
@@ -171,11 +177,17 @@ struct OrderQRCodeView: View {
                     Text(acceptanceName ?? "")
                         .bold()
                 }.padding(.bottom, 4)
-                
+                HStack {
+                    Spacer()
                 Image(uiImage: uiImage ?? UIImage(systemName: "wifi")!)
+                .resizable()
+                .scaledToFit()
+                    Spacer()
+                }
             }
             Spacer()
         }.onAppear(perform: setData)
+            
         
         
     }

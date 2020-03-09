@@ -114,7 +114,7 @@ struct QueueingOrderView: View {
     var body : some View {
         VStack{
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     VStack(alignment: .leading){
                         HStack {
                             Text("出發地")
@@ -151,7 +151,7 @@ struct QueueingOrderView: View {
                             
                             Text(order.address.info)
                                 .font(.footnote)
-                                .padding(4)
+                                .padding(8)
                             
                         }
                     }
@@ -246,7 +246,7 @@ struct DeliveringOrderView: View {
                 DeliveringOrderShopView(order: order, presentButton: false, viewService: viewService)
             } else if order_state == 2 {
                 DeliveringOrderShopView(order: order, presentButton: true, viewService: viewService)
-            } else if order.order_state == 3{
+            } else if order.order_state == 3 {
                 DeliveringOrderMemberView(order: order, viewService: viewService)
             }
         }
