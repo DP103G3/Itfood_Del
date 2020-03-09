@@ -15,7 +15,8 @@ public struct OrderItemView: View {
     @EnvironmentObject var orderItemViewModel : OrderItemViewModel
     @State private var distance : String = "n"
     @State private var distanceUnit : String = "m"
-    var viewService: ViewService
+    
+    @ObservedObject var viewService: ViewService
     
     var order : Order
     
@@ -31,39 +32,46 @@ public struct OrderItemView: View {
         
         Group {
             // MARK: 待接單訂單
-            if order.order_state == 1 || order.order_state == 2 {
-                QueueingView(viewService: viewService, order: order)
+            if order.del_id == -1 && (order.order_state == 1 || order.order_state == 2) {
+                QueueingOrderView(viewService: viewService, order: order)
                     .animation(.spring())
                     .onDisappear{
-                        self.orderItemViewModel.queueingItemViewExpanded.removeAll()
+//                        self.orderItemViewModel.queueingItemViewExpanded.removeAll()
                         self.orderItemViewModel.selectedOrder["selected"] = false
-                        self.orderItemViewModel.selectedOrder.removeAll()
+//                        self.orderItemViewModel.selectedOrder.removeAll()
                 }
-                    .onTapGesture {
-                        self.orderItemViewModel.queueingItemViewExpanded.forEach { (order_id, isExpanded) in
-                            if !(order_id == self.order.order_id) {
-                                self.orderItemViewModel.queueingItemViewExpanded[order_id] = false
-                            }
-                            self.orderItemViewModel.selectedOrder["selected"] = false
+                .onTapGesture {
+                    self.orderItemViewModel.queueingItemViewExpanded.forEach { (order_id, isExpanded) in
+                        if !(order_id == self.order.order_id) {
+                            self.orderItemViewModel.queueingItemViewExpanded[order_id] = false
                         }
-                        
+                        self.orderItemViewModel.selectedOrder["selected"] = false
+                    }
+                    
+                    self.orderItemViewModel
+                        .queueingItemViewExpanded[self.order.order_id]?.toggle()
+                    
+                    if self.orderItemViewModel
+                        .queueingItemViewExpanded[self.order.order_id] ?? false {
                         self.orderItemViewModel
-                            .queueingItemViewExpanded[self.order.order_id]?.toggle()
-                        
-                        if self.orderItemViewModel
-                            .queueingItemViewExpanded[self.order.order_id] ?? false {
-                            self.orderItemViewModel
-                                .selectedOrder["order"] = self.order
-                            self.orderItemViewModel
-                                .selectedOrder["selected"] = true
-                        } else {
-                            self.orderItemViewModel
-                                .selectedOrder["selected"] = false
-                        }
-                        
+                            .selectedOrder["order"] = self.order
+                        self.orderItemViewModel
+                            .selectedOrder["selected"] = true
+                        self.orderItemViewModel
+                            .selectedOrder["status"] = "queueing"
+                    } else {
+                        self.orderItemViewModel
+                            .selectedOrder["selected"] = false
+                    }
                 }
-            } else if order.order_state == 3 {
-                
+            } else {
+                DeliveringOrderView(viewService: viewService, order_state: order.order_state, order: order)
+                    .onTapGesture {
+//                        self.orderItemViewModel.selectedOrder.removeAll()
+                        self.orderItemViewModel.selectedOrder["order"] = self.order
+                        self.orderItemViewModel.selectedOrder["selected"] = true
+                        self.orderItemViewModel.selectedOrder["status"] = "delivering"
+                }
             }
         }.onAppear(perform: addOrderExpanded)
     }
@@ -86,12 +94,13 @@ public struct OrderItemView: View {
     }
 }
 
-struct QueueingView: View {
+struct QueueingOrderView: View {
     @EnvironmentObject private var locationManager : LocationManager
     @EnvironmentObject var orderItemViewModel: OrderItemViewModel
     @State private var distance : String = "n"
-    var viewService : ViewService
+    @ObservedObject var viewService : ViewService
     @State private var distanceUnit : String = "m"
+    @State private var showAcceptOrderAlert = false
     
     var order : Order
     
@@ -149,7 +158,7 @@ struct QueueingView: View {
                 }
                 Spacer()
                 VStack(alignment: .center) {
-                    Text("距離出發地")
+                    Text("距離店家")
                         .padding(.bottom, 6)
                     HStack {
                         Text (distance + " " + distanceUnit)
@@ -176,12 +185,23 @@ struct QueueingView: View {
                     .padding(.top, 10) 
                     .padding(.bottom, 6)
                     .onTapGesture {
-                        self.viewService.sendAcceptOrderMessage(order: self.order)
-                }
+                        self.showAcceptOrderAlert.toggle()
+                        //                        self.orderItemViewModel.selectedOrder.removeAll()
+                        //                        self.orderItemViewModel.queueingItemViewExpanded.forEach { (order_id, isExpanded) in
+                        //                            if !(order_id == self.order.order_id) {
+                        //                                self.orderItemViewModel.queueingItemViewExpanded[order_id] = false
+                        //                            }
+                        //                            self.orderItemViewModel.selectedOrder["selected"] = false
+                        //                        }
+                }.animation(.linear)
             } else {
-//                orderItemViewModel.selectedOrder["selected"] = false
+                //                orderItemViewModel.selectedOrder["selected"] = false
             }
             
+        }.alert(isPresented: $showAcceptOrderAlert) {
+            Alert(title: Text("確認接單"), message: Text("你確定要接受此訂單？"), primaryButton: .default(Text("確定"), action: {
+                self.viewService.sendAcceptOrderMessage(order: self.order)
+            }), secondaryButton: .cancel())
         }
     }
     
@@ -198,6 +218,41 @@ struct QueueingView: View {
         }
     }
 }
+
+struct DeliveringOrderView: View {
+    @EnvironmentObject private var locationManager : LocationManager
+    @EnvironmentObject var orderItemViewModel: OrderItemViewModel
+    @State private var distance : String = "n"
+    @ObservedObject var viewService: ViewService
+    var order_state: Int
+    @State private var distanceUnit : String = "m"
+    @State private var showCompleteOrderAlert = false
+    @State private var showCompleteOrderSheet = false
+
+    
+    var order : Order
+    
+    var userLatitude: String {
+        return "\(locationManager.lastLocation?.coordinate.latitude ?? 0)"
+    }
+    
+    var userLongitude: String {
+        return "\(locationManager.lastLocation?.coordinate.longitude ?? 0)"
+    }
+    var body: some View {
+        
+        return Group {
+            if order_state == 1 {
+                DeliveringOrderShopView(order: order, presentButton: false, viewService: viewService)
+            } else if order_state == 2 {
+                DeliveringOrderShopView(order: order, presentButton: true, viewService: viewService)
+            } else if order.order_state == 3{
+                DeliveringOrderMemberView(order: order, viewService: viewService)
+            }
+        }
+    }
+}
+
 
 extension Double {
     func roundToDecimal(_ fractionDigits: Int) -> Double {

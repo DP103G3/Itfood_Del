@@ -37,7 +37,7 @@ struct Order : Codable, Hashable{
     
     var isExpanded: Bool?
     
-
+    
     func description () -> String{
         "{id: " + order_id.description + "\nshop_name: " + shop.name + "}\n"
     }
@@ -83,6 +83,8 @@ enum URLs : Hashable {
             return "ws://127.0.0.1:8080/Itfood_Web/OrderSocket/del"
         case .DeliverySocket:
             return "ws://127.0.0.1:8080/Itfood_Web/DeliverySocket/del"
+//        case .DeliverySocket:
+//            return "ws://192.168.43.134:8080/Itfood_Web/DeliverySocket/del"
         }
     }
 }
