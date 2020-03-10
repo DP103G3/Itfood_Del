@@ -13,7 +13,6 @@ struct DeliveringOrderMemberView: View {
     var order: Order
     @ObservedObject var viewService: ViewService
     @State private var showCompleteOrderAlert = false
-    @State private var showCompleteOrderSheet = false
     @State private var showConfirmOrderAlert = false
     @State private var orderString: String?
     
@@ -89,23 +88,23 @@ struct DeliveringOrderMemberView: View {
                 .padding(.top, 4)
                 .padding(.bottom, 4)
             
-            Divider()
-            HStack{
-                Text("確認取餐")
-                    .frame(maxWidth: .infinity)
-                    .padding(6)
-                    .padding(.top, 4)
-                    .padding(.bottom, 4)
-                    .background(Color.colorSecondary)
-                    .foregroundColor(.colorTextOnS)
-                    .cornerRadius(8)
-                    .padding(.leading)
-                    .padding(.trailing)
-                    .padding(.bottom, 4)
-                    .onTapGesture {
-                        self.showCompleteOrderAlert.toggle()
-                }
-            }
+//            Divider()
+//            HStack{
+//                Text("完成訂單")
+//                    .frame(maxWidth: .infinity)
+//                    .padding(6)
+//                    .padding(.top, 4)
+//                    .padding(.bottom, 4)
+//                    .background(Color.colorSecondary)
+//                    .foregroundColor(.colorTextOnS)
+//                    .cornerRadius(8)
+//                    .padding(.leading)
+//                    .padding(.trailing)
+//                    .padding(.bottom, 4)
+//                    .onTapGesture {
+//                        self.showCompleteOrderAlert.toggle()
+//                }
+//            }
         }.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 2))
             .alert(isPresented: self.$showConfirmOrderAlert) {
                 Alert(title: Text("訂單確認成功！"))
@@ -121,13 +120,8 @@ struct DeliveringOrderMemberView: View {
                 for orderDetail: OrderDetail in self.order.orderDetails! {
                     orderDetails.append("\n" + orderDetail.dish.name + " x" + orderDetail.od_count.description + "\n")
                 }
-                return Alert(title: Text("確認訂單"), message: Text(orderDetails) + Text("總計: \(order.order_ttprice)\n") + Text("付款狀態: \(paymentStatus!)"), primaryButton: .default(Text("確認"), action: {
-                    self.showCompleteOrderSheet.toggle()
+                return Alert(title: Text("完成訂單"), message: Text(orderDetails) + Text("總計: \(order.order_ttprice)\n") + Text("付款狀態: \(paymentStatus!)"), primaryButton: .default(Text("確認"), action: {
                 }), secondaryButton: .cancel())
-        }
-        .sheet(isPresented: $showCompleteOrderSheet) {
-            CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
-//            CodeScannerView(codeTypes: [.qr], simulatedData: self.orderString ?? "", completion: self.handleScan)
         }
     }
     
@@ -139,29 +133,7 @@ struct DeliveringOrderMemberView: View {
         if let orderData = try? encoder.encode(order) {
             self.orderString = String(data: orderData, encoding: .utf8)
         }
-        
     }
     
-    func handleScan(result: Result<String, CodeScannerView.ScanError>) {
-        self.showCompleteOrderSheet = false
-        switch result {
-        case .success(let code):
-            let decoder = JSONDecoder()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            decoder.dateDecodingStrategy = .formatted(formatter)
-            if let data = code.data(using: .utf8), let order = try? decoder.decode(Order.self, from: data) {
-                guard order.order_id == self.order.order_id else {
-                    print("Order doesn't match.")
-                    return
-                }
-                print("Scanned success")
-                self.viewService.sendCompleteMessage(order: order)
-                return
-            }
-        case .failure(let error):
-            print("Scanning failed" + error.localizedDescription)
-        }
-    }
 }
 
