@@ -48,7 +48,7 @@ struct DeliveryView: View {
             }
             
             VStack{
-                Toggle(isOn: $viewService.connectToSocket) {
+                Toggle(isOn: $viewService.connectToSocket.animation(.spring())) {
                     if viewService.connectToSocket {
                         Text("上線")
                             .padding(2)
@@ -75,10 +75,21 @@ struct DeliveryView: View {
                 .padding(.leading, 4)
                 
                 
-                Picker("訂單種類", selection: $selectedIndex) {
+                Picker("訂單種類", selection: $selectedIndex.animation(.spring())) {
                     ForEach(0 ..< orderTypes.count){ index in
-                        Text(self.orderTypes[index])
-                            .tag(index)
+                        if index == 0 {
+                            (Text(self.orderTypes[0]) +
+                                Text(" (" + self.viewService.queueingOrders.count.description + ")"))
+                                .transition(.opacity)
+                                .animation(.easeInOut(duration:1))
+                                .tag(0)
+                        } else {
+                            (Text(self.orderTypes[1]) +
+                                Text(" (" + self.viewService.deliveringOrders.count.description + ")"))
+                                .transition(.opacity)
+                                .animation(.easeInOut(duration:1))
+                            .tag(1)
+                        }
                     }
                 }.pickerStyle(SegmentedPickerStyle())
                     .padding(.trailing, 4)
@@ -100,10 +111,10 @@ struct DeliveryView: View {
                         ForEach(viewService.deliveringOrders, id:\.order_id) { order in
                             OrderItemView(viewService: self.viewService, order: order)
                             
-                        }.listStyle(DefaultListStyle())
+                        }.listStyle(PlainListStyle())
                     }
                 }.background(Color.white.opacity(0))
-                    .frame(width: nil, height: 200, alignment: .top)
+                    .frame(width: nil, height: 280, alignment: .top)
                 
             }.offset(x: 0, y: -8)
         }

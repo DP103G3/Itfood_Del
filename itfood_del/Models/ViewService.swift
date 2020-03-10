@@ -13,11 +13,15 @@ class ViewService: ObservableObject {
     @Published var connectToSocket = false
     @Published var queueingOrders = [Order]()
     @Published var deliveringOrders = [Order]()
+    @Published var showQRCodeSheet = false
+    @Published var showAcceptSuccessAlert = false
     
+    private let TAG = "TAG_ViewService"
     private let service = SocketService()
     private let dateFormatter = DateFormatter()
     private let decoder = JSONDecoder()
     private var cancellableSet: Set<AnyCancellable> = []
+    let del_id = UserDefaults.standard.integer(forKey: "del_id")
     
     func connect() {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -30,25 +34,45 @@ class ViewService: ObservableObject {
                 case .success(let message):
                     switch message {
                     case .string(let text):
+                        print(text)
                         do {
-                            print("View service" + " Receiving Message: " + text)
                             let data = text.data(using: .utf8)
-                            let areaOrders = try self.decoder.decode(AreaOrders.self, from: data!)
-                            print(areaOrders)
-                            let orders = areaOrders.orders
-                            let queueingOrders = orders.filter { (order) -> Bool in
-                                order.order_state == 1 || order.order_state == 2
+                            if let orders = try? self.decoder.decode([Order].self, from: data!){
+                                print(self.TAG + orders.description)
+                                let queueingOrders = orders.filter { (order) -> Bool in
+                                    (order.order_state == 1 || order.order_state == 2) && order.del_id == -1
+                                }
+                                let deliveringOrders = orders.filter({ (order) -> Bool in
+                                    order.order_state == 3 || ((order.order_state == 1 || order.order_state == 2) && (order.del_id == self.del_id))
+                                })
+                                self.queueingOrders = queueingOrders
+                                self.deliveringOrders = deliveringOrders
+                            } else if let deliveryMessage: DeliveryMessage = try? self.decoder.decode(DeliveryMessage.self, from: data!) {
+                                print(self.TAG + "DeliveryMessage: " + (deliveryMessage.action ?? ""))
+                                let action = deliveryMessage.action
+                                if action == "confirmOrder" {
+                                    self.objectWillChange.send()
+                                    self.showQRCodeSheet = false
+//                                    self.objectWillChange.send()
+                                    self.showAcceptSuccessAlert = true
+                                }
+                                let order = deliveryMessage.order
+                                for o: Order in self.deliveringOrders {
+                                    if o.order_id == order?.order_id {
+                                        let id = o.order_id
+                                        self.deliveringOrders = self.deliveringOrders.filter { (order) -> Bool in
+                                            order.order_id != id
+                                        }
+                                        self.deliveringOrders.append(order!)
+                                    }
+                                }
                             }
-                            let deliveringOrders = orders.filter({ (order) -> Bool in
-                                order.order_state == 3
-                            })
-                            self.queueingOrders = queueingOrders
-                            self.deliveringOrders = deliveringOrders
-                            //                                print(orders.description)
                             
-                        } catch  {
+                        } catch {
                             print(error)
                         }
+                        
+                    //                                print(orders.description)
                     default:
                         break
                     }
@@ -59,6 +83,21 @@ class ViewService: ObservableObject {
         
         //        service.sendFetchOrdersRequest()
     }
+    
+//    private var confirmOrderPublisher: AnyPublisher<Bool, Never> {
+//        $confirmOrder
+//            .debounce(for: 0, scheduler: RunLoop.main)
+//            .removeDuplicates()
+//            .map { confirm in
+//                var showing = false
+//                if confirm {
+//                    showing = false
+//                } else {
+//                    showing = true
+//                }
+//                return showing
+//        }.eraseToAnyPublisher()
+//    }
     
     private var connectToSocketPublisher: AnyPublisher<Bool, Never> {
         $connectToSocket
@@ -87,6 +126,14 @@ class ViewService: ObservableObject {
         service.sendDeliveryMessage(deliveryMassage: deliveryMessage)
     }
     
+    func sendCompleteMessage(order: Order) {
+        let userDefaults = UserDefaults.standard
+        let areaCode = userDefaults.integer(forKey: "areaCode")
+        let del_id = userDefaults.integer(forKey: "del_id")
+        let deliveryMessage = DeliveryMessage(action: "deliveryCompleteOrder", order: order, areaCode: areaCode, sender: "del" + del_id.description, receiver: "mem" + order.mem_id.description)
+        service.sendDeliveryMessage(deliveryMassage: deliveryMessage)
+    }
+    
     init() {
         connectToSocketPublisher
             .receive(on: RunLoop.main)
@@ -96,6 +143,15 @@ class ViewService: ObservableObject {
         }
         .assign(to: \.connectToSocket, on: self)
         .store(in: &cancellableSet)
+        
+        //        confirmOrderPublisher
+        //            .receive(on: RunLoop.main)
+        //            .map {
+        //                showed in
+        //                showed ? true : false
+        //        }
+        //        .assign(to: \.confirmOrder, on: self)
+        //        .store(in: &cancellableSet)
     }
     
 }

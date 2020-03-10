@@ -15,6 +15,9 @@ struct MapView: UIViewRepresentable{
     @EnvironmentObject var orderItemViewModel: OrderItemViewModel
     var followUser: Int
     var selectedOrder: [String: Any]?
+    var status: String? {
+        selectedOrder?["status"] as? String
+    }
     
     
     //藉由EnviromentObejct locatioManager 取得使用者現在位置的經緯度
@@ -34,7 +37,6 @@ struct MapView: UIViewRepresentable{
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: UIScreen.main.bounds)
-        
         let span = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
         let region = MKCoordinateRegion(center: locationManager.lastLocation!.coordinate, span: span)
         mapView.setRegion(region, animated: true)
@@ -63,34 +65,35 @@ struct MapView: UIViewRepresentable{
         }
         
         if (selectedOrder?["selected"] as? Bool ?? false){
-            view.removeAnnotations(view.annotations)
-            view.removeOverlays(view.overlays)
-            print("mapview function")
-            let directions = self.getDirections()
+            resetMap(mapView: view)
+            let directions = self.getDirections(status: status!)
             self.setAnnotationsAndPolyline(mapView: view, directions: directions)
         } else {
-            view.removeAnnotations(view.annotations)
-            view.removeOverlays(view.overlays)
-            view.setUserTrackingMode(.followWithHeading, animated: true)
+            resetMap(mapView: view)
         }
-        
-        
-        
-        
-        
         //        view.setRegion(region, animated: true)
     }
     
-    func getDirections() -> MKDirections{
+    func getDirections(status: String) -> MKDirections{
         let request = MKDirections.Request()
-        let mapItems = getOrderMapItems(order: selectedOrder!["order"] as! Order)
-        let shopMapItem = mapItems["shop"]
+        let mapItems = getOrderMapItems(order: selectedOrder!["order"] as! Order, status: status)
+        var sourceMapItem = MKMapItem()
+        if status == OrderStatus.queueing.rawValue {
+            sourceMapItem = mapItems["shop"]!
+        } else if status == OrderStatus.delivering.rawValue {
+            sourceMapItem = mapItems["currentPosition"]!
+        }
         let destinationMapItem = mapItems["destination"]
-        request.source = shopMapItem
+        request.source = sourceMapItem
         request.destination = destinationMapItem
         request.transportType = .automobile
         let directions = MKDirections(request: request)
         return directions
+    }
+    
+    enum OrderStatus: String {
+        case queueing = "queueing"
+        case delivering = "delivering"
     }
     
     
@@ -103,17 +106,22 @@ struct MapView: UIViewRepresentable{
                 print (error?.localizedDescription ?? "Unknown error")
                 return
             }
-            let shopAnnotation = MKPointAnnotation()
-            shopAnnotation.coordinate = (direct?.source.placemark.coordinate)!
-            shopAnnotation.title = direct?.source.placemark.name
-            let order = self.selectedOrder!["order"] as! Order
-            shopAnnotation.subtitle = order.shop.address
-            //            shopAnnotation.imageName()
-            
+            let sourceAnnotation = MKPointAnnotation()
             let destinationAnnotation = MKPointAnnotation()
+            let order = self.selectedOrder!["order"] as! Order
+            sourceAnnotation.coordinate = (direct?.source.placemark.coordinate)!
+            sourceAnnotation.title = direct?.source.placemark.name
             destinationAnnotation.coordinate = (direct?.destination.placemark.coordinate)!
             destinationAnnotation.title = direct?.destination.placemark.name
-            mapView.addAnnotations([shopAnnotation, destinationAnnotation])
+            
+            if self.status == OrderStatus.queueing.rawValue {
+                sourceAnnotation.subtitle = order.shop.address
+                mapView.addAnnotations([sourceAnnotation, destinationAnnotation])
+            } else if self.status == OrderStatus.delivering.rawValue {
+                destinationAnnotation.subtitle = order.shop.address
+                mapView.addAnnotations([destinationAnnotation])
+            }
+            
             
             let polyline = direct?.routes.first?.polyline
             mapView.addOverlay(polyline!)
@@ -132,33 +140,57 @@ struct MapView: UIViewRepresentable{
         }
     }
     
-    func getOrderMapItems (order: Order) -> [String: MKMapItem]{
-        var shopMapItem = MKMapItem()
-        let shopLat = order.shop.latitude
-        let shopLong = order.shop.longitude
-        let shopCoordinate = CLLocationCoordinate2D(latitude: shopLat, longitude: shopLong)
-        let shopPlaceMark = MKPlacemark(coordinate: shopCoordinate)
-        shopMapItem = MKMapItem(placemark: shopPlaceMark)
-        let shopName = order.shop.name
-        let shopPhone = order.shop.phone
-        shopMapItem.name = shopName
-        shopMapItem.phoneNumber = shopPhone
-        var mapItems =  [String: MKMapItem]()
-        mapItems["shop"] = shopMapItem
-        
-        var destinationMapItem = MKMapItem()
-        let destinationLat = order.address.latitude
-        let destinationLong = order.address.longitude
-        let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
-        let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
-        let destinationName = order.address.info
-        let destinationPhone = order.order_phone
-        destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
-        destinationMapItem.name = destinationName
-        destinationMapItem.phoneNumber = destinationPhone
-        mapItems["destination"] = destinationMapItem
-        
-        return mapItems
+    func getOrderMapItems (order: Order, status: String) -> [String: MKMapItem]{
+        var mapItems = [String: MKMapItem]()
+        if status == OrderStatus.queueing.rawValue {
+            var shopMapItem = MKMapItem()
+            let shopLat = order.shop.latitude
+            let shopLong = order.shop.longitude
+            let shopCoordinate = CLLocationCoordinate2D(latitude: shopLat, longitude: shopLong)
+            let shopPlaceMark = MKPlacemark(coordinate: shopCoordinate)
+            shopMapItem = MKMapItem(placemark: shopPlaceMark)
+            let shopName = order.shop.name
+            let shopPhone = order.shop.phone
+            shopMapItem.name = shopName
+            shopMapItem.phoneNumber = shopPhone
+            mapItems["shop"] = shopMapItem
+            
+            var destinationMapItem = MKMapItem()
+            let destinationLat = order.address.latitude
+            let destinationLong = order.address.longitude
+            let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+            let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
+            let destinationName = order.address.info
+            let destinationPhone = order.order_phone
+            destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
+            destinationMapItem.name = destinationName
+            destinationMapItem.phoneNumber = destinationPhone
+            mapItems["destination"] = destinationMapItem
+            
+        } else if status == OrderStatus.delivering.rawValue {
+            var currentMapItem = MKMapItem()
+            let currentLat = Double(self.userLatitude)
+            let currentLong = Double(self.userLongitude)
+            let currentCoordinate = CLLocationCoordinate2D(latitude: currentLat!, longitude: currentLong!)
+            let currentPlaceMark = MKPlacemark(coordinate: currentCoordinate)
+            currentMapItem = MKMapItem(placemark: currentPlaceMark)
+            let currentName = "我的位置"
+            currentMapItem.name = currentName
+            mapItems["currentPosition"] = currentMapItem
+            
+            var destinationMapItem = MKMapItem()
+            let destinationLat = order.shop.latitude
+            let destinationLong = order.shop.longitude
+            let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+            let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
+            let destinationName = order.shop.name
+            let destinationPhone = order.shop.phone
+            destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
+            destinationMapItem.name = destinationName
+            destinationMapItem.phoneNumber = destinationPhone
+            mapItems["destination"] = destinationMapItem
+        }
+         return mapItems
     }
     //
     //    func getDestinationMapItem () -> MKMapItem {
@@ -176,6 +208,12 @@ struct MapView: UIViewRepresentable{
     
     func makeCoordinator() -> MapViewCoordinator {
         MapViewCoordinator(self)
+    }
+    
+    func resetMap(mapView: MKMapView){
+        mapView.removeOverlays(mapView.overlays)
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.setUserTrackingMode(.followWithHeading, animated: true)
     }
     
     
