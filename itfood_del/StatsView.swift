@@ -88,55 +88,76 @@ struct StatsView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                TextField("選擇月份", text: $textfieldText, onEditingChanged: { (editting) in
-                    self.showDatePicker = editting
-                }).padding(20)
-            }
-            if showDatePicker {
-                VStack {
+            VStack {
+                HStack {
                     Button(action: {
-                        self.showDatePicker = false
-                        self.loadData()
-                        UIApplication.shared.windows.forEach { $0.endEditing(true) }
+                        self.showDatePicker = true
                     }) {
-                        Text("確定")
-                    }
-                    HStack {
-                        Picker(selection: $selectYear, label: Text("年")) {
-                            ForEach(0..<yearSorce.count) {
-                                Text(self.yearSorce[$0]).tag($0)
-                            }
-                        }
-                        .frame(width: UIScreen.main.bounds.width / 2)
-                        .onReceive([self.selectYear].publisher.first()) { (selectYear) in
-                            self.selectYear = selectYear
-                            self.textfieldText = "\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])"
-                            if selectYear == self.yearSorce.count - 1 {
-                                self.selectMonth = self.selectMonth > self.maxMonth - 1 ? self.maxMonth - 1 : self.selectMonth
-                            }
-                        }
-                        Picker(selection: $selectMonth, label: Text("月")) {
-                            ForEach(0..<self.monthSorce.count, id: \.self) {
-                                Text(self.monthSorce[$0]).tag($0)
-                            }
-                        }
-                        .frame(width: UIScreen.main.bounds.width / 2)
-                        .onReceive([self.selectMonth].publisher.first()) { (selectMonth) in
-                            self.selectMonth = selectMonth
-                            if self.selectYear == self.yearSorce.count - 1 {
-                                self.selectMonth = self.selectMonth > self.maxMonth - 1 ? self.maxMonth - 1 : self.selectMonth
-                            }
-                            self.textfieldText = "\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])"
-                        }
+                        Text("\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])")
+                            .padding(8)
+                            .foregroundColor(.colorTextOnS)
+                            .background(Color.colorSecondary).cornerRadius(4)
                     }
                 }
+                HStack {
+                    Spacer()
+                    VStack {
+                        Text("\(total)")
+                    }
+                    Spacer()
+                    VStack {
+                        Text("\(amount)")
+                    }
+                    Spacer()
+                }
+            }.offset(CGSize(width: 0, height: 16))
+            Spacer()
+            if showDatePicker {
+                monthPicker
+            }
+        }.background(Color.colorBackground)
+    }
+    
+    var monthPicker: some View {
+        VStack {
+            Button(action: {
+                self.showDatePicker = false
+                self.loadData()
+                UIApplication.shared.windows.forEach { $0.endEditing(true) }
+            }) {
+                Text("確定").padding(8)
+                .foregroundColor(.colorTextOnS)
+                .background(Color.colorSecondary).cornerRadius(4)
             }
             HStack {
-                Text("\(total)")
-                Text("\(amount)")
+                Picker(selection: $selectYear, label: Text("年")) {
+                    ForEach(0..<yearSorce.count) {
+                        Text(self.yearSorce[$0]).tag($0).foregroundColor(.colorTextOnP)
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width / 2)
+                .onReceive([self.selectYear].publisher.first()) { (selectYear) in
+                    self.selectYear = selectYear
+                    self.textfieldText = "\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])"
+                    if selectYear == self.yearSorce.count - 1 {
+                        self.selectMonth = self.selectMonth > self.maxMonth - 1 ? self.maxMonth - 1 : self.selectMonth
+                    }
+                }
+                Picker(selection: $selectMonth, label: Text("月")) {
+                    ForEach(0..<self.monthSorce.count, id: \.self) {
+                        Text(self.monthSorce[$0]).tag($0).foregroundColor(.colorTextOnP)
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width / 2)
+                .onReceive([self.selectMonth].publisher.first()) { (selectMonth) in
+                    self.selectMonth = selectMonth
+                    if self.selectYear == self.yearSorce.count - 1 {
+                        self.selectMonth = self.selectMonth > self.maxMonth - 1 ? self.maxMonth - 1 : self.selectMonth
+                    }
+                    self.textfieldText = "\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])"
+                }
             }
-        }
+        }.background(Color.colorItemBackground)
     }
 }
 
