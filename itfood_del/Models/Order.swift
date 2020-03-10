@@ -8,7 +8,9 @@
 
 import Foundation
 
-let url = "http://10.0.2.2:8080/Itfood_Web/del"
+//let ipAddress: String = "127.0.0.1"
+let ipAddress: String = "192.168.43.134"
+let url = "http://\(ipAddress)/Itfood_Web/del"
 
 
 
@@ -70,21 +72,19 @@ enum URLs : Hashable {
     func getURL() -> String {
         switch self {
         case .Order:
-            return "http://127.0.0.1:8080/Itfood_Web/OrderServlet"
+            return "http://\(ipAddress):8080/Itfood_Web/OrderServlet"
         case .Shop:
-            return  "http://127.0.0.1:8080/Itfood_Web/ShopServlet"
+            return  "http://\(ipAddress):8080/Itfood_Web/ShopServlet"
         case .Delivery:
-            return  "http://127.0.0.1:8080/Itfood_Web/DeliveryServlet"
+            return  "http://\(ipAddress):8080/Itfood_Web/DeliveryServlet"
         case .OrderDetail:
-            return  "http://127.0.0.1:8080/Itfood_Web/OrderDetailServlet"
+            return  "http://\(ipAddress):8080/Itfood_Web/OrderDetailServlet"
         case .Member:
-            return  "http://127.0.0.1:8080/Itfood_Web/MemberServlet"
+            return  "http://\(ipAddress):8080/Itfood_Web/MemberServlet"
         case .OrderSocket:
-            return "ws://127.0.0.1:8080/Itfood_Web/OrderSocket/del"
+            return "ws://\(ipAddress):8080/Itfood_Web/OrderSocket/del"
         case .DeliverySocket:
-            return "ws://127.0.0.1:8080/Itfood_Web/DeliverySocket/del"
-//        case .DeliverySocket:
-//            return "ws://192.168.43.134:8080/Itfood_Web/DeliverySocket/del"
+            return "ws://\(ipAddress):8080/Itfood_Web/DeliverySocket/del"
         }
     }
 }

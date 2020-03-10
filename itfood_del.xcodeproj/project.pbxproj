@@ -39,6 +39,13 @@
 		CD65E652241160B500AE8AD5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64C241160B500AE8AD5 /* MapView.swift */; };
 		CD65E6542411613600AE8AD5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E6532411613600AE8AD5 /* LocationManager.swift */; };
 		CD65E6562411614500AE8AD5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E6552411614500AE8AD5 /* Order.swift */; };
+		F52360CE241554AE001974A2 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360CD241554AE001974A2 /* PersonView.swift */; };
+		F52360D224156809001974A2 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360D124156809001974A2 /* Person.swift */; };
+		F52360D42415781F001974A2 /* PersonInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360D32415781F001974A2 /* PersonInfoView.swift */; };
+		F52360D624158186001974A2 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360D524158186001974A2 /* InformationView.swift */; };
+		F52360D824159533001974A2 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360D724159533001974A2 /* AboutView.swift */; };
+		F52360DA24159590001974A2 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360D924159590001974A2 /* PasswordView.swift */; };
+		F52360DE2416CFC4001974A2 /* PersonInfoUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52360DD2416CFC4001974A2 /* PersonInfoUpdateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +81,13 @@
 		CD65E64C241160B500AE8AD5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CD65E6532411613600AE8AD5 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CD65E6552411614500AE8AD5 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		F52360CD241554AE001974A2 /* PersonView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; tabWidth = 5; usesTabs = 1; };
+		F52360D124156809001974A2 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		F52360D32415781F001974A2 /* PersonInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfoView.swift; sourceTree = "<group>"; };
+		F52360D524158186001974A2 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		F52360D724159533001974A2 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; usesTabs = 0; };
+		F52360D924159590001974A2 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		F52360DD2416CFC4001974A2 /* PersonInfoUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfoUpdateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +125,7 @@
 				BB742A80240DF6A20089D068 /* DeliveryMessage.swift */,
 				BB742A86240DFF9C0089D068 /* SocketService.swift */,
 				BB451CF1240E3E82002525B9 /* ViewService.swift */,
+				F52360D124156809001974A2 /* Person.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -125,8 +140,15 @@
 				CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */,
 				CD65E6452411604300AE8AD5 /* ContentView.swift */,
 				BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */,
+				F52360CD241554AE001974A2 /* PersonView.swift */,
+				F52360D32415781F001974A2 /* PersonInfoView.swift */,
+				F52360D524158186001974A2 /* InformationView.swift */,
+				F52360D724159533001974A2 /* AboutView.swift */,
+				F52360D924159590001974A2 /* PasswordView.swift */,
+				F52360DD2416CFC4001974A2 /* PersonInfoUpdateView.swift */,
 				BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */,
 				BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */,
+
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -264,8 +286,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F52360DE2416CFC4001974A2 /* PersonInfoUpdateView.swift in Sources */,
+				F52360CE241554AE001974A2 /* PersonView.swift in Sources */,
 				CD65E6462411604300AE8AD5 /* ContentView.swift in Sources */,
 				CD65E6442411601400AE8AD5 /* Data.swift in Sources */,
+				F52360D824159533001974A2 /* AboutView.swift in Sources */,
 				CD65E651241160B500AE8AD5 /* PastOrdersView.swift in Sources */,
 				CD65E652241160B500AE8AD5 /* MapView.swift in Sources */,
 				CD65E64224115FEF00AE8AD5 /* Color.swift in Sources */,
@@ -274,6 +299,7 @@
 				CD65E6542411613600AE8AD5 /* LocationManager.swift in Sources */,
 				BBDC4541241615AE00C81B89 /* DeliveringOrderShopView.swift in Sources */,
 				CD65E63824115CA600AE8AD5 /* SocketService.swift in Sources */,
+				F52360D224156809001974A2 /* Person.swift in Sources */,
 				CD65E63724115C9F00AE8AD5 /* AppDelegate.swift in Sources */,
 				CD65E63524115C9300AE8AD5 /* UserData.swift in Sources */,
 				CD65E63424115C8D00AE8AD5 /* OrderItemViewModel.swift in Sources */,
@@ -283,12 +309,15 @@
 				CD65E63024115C7400AE8AD5 /* Common.swift in Sources */,
 				CD65E64E241160B500AE8AD5 /* LoginView.swift in Sources */,
 				CD65E6562411614500AE8AD5 /* Order.swift in Sources */,
+				F52360D624158186001974A2 /* InformationView.swift in Sources */,
 				CD65E62F24115C6C00AE8AD5 /* StatsView.swift in Sources */,
 				CD65E62A24115C4600AE8AD5 /* AreaOrders.swift in Sources */,
+				F52360DA24159590001974A2 /* PasswordView.swift in Sources */,
 				CD65E62924115C4000AE8AD5 /* itfood_del.xcdatamodeld in Sources */,
 				CD65E62624115C2500AE8AD5 /* ViewService.swift in Sources */,
 				BBDC4543241615E000C81B89 /* DeliveringOrderMemberView.swift in Sources */,
 				CD65E62424115C1700AE8AD5 /* Url.swift in Sources */,
+				F52360D42415781F001974A2 /* PersonInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

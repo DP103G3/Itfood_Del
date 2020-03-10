@@ -47,7 +47,7 @@ struct ContentView: View {
             }.tag(2)
             
             //MARK: 個人資訊Tab
-            Text("Tab Content 2").tabItem {
+            PersonView(loginSuccessful: true).tabItem {
                 VStack{
                     Image(systemName: "person")
                     Text("個人資訊")
