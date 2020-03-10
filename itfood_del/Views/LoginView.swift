@@ -156,7 +156,7 @@ struct LoginView: View {
                         DispatchQueue.main.async {
                             self.loginSuccessful = true
                             userDefaults.set(del_id, forKey: "del_id")
-                            userDefaults.set(del_area_code, forKey: "del_area_code")
+                            userDefaults.set(del_area_code, forKey: "areaCode")
                             self.userData.del_id = del_id
                         }
                     }
