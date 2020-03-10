@@ -68,9 +68,10 @@ class ViewService: ObservableObject {
                                 }
                             }
                             
-                        } catch {
-                            print(error)
                         }
+//                        catch {
+//                            print(error)
+//                        }
                         
                     //                                print(orders.description)
                     default:

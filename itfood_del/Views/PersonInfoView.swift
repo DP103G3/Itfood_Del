@@ -15,11 +15,9 @@ struct PersonInfoView: View {
     @State private var identityid = ""
     @State private var phone = ""
     
-    let url_server = URL(string: common_url + "DeliveryServlet")
+    let url = URL(string: common_url + "DeliveryServlet")
     var person: Person!
-    func viewWillAppear(){
-        self.showData()
-    }
+    
     var body: some View {
        
         //let id:Int UserDefaults.standard.object(forKey: "del_id")
@@ -63,21 +61,36 @@ struct PersonInfoView: View {
              Spacer()
             }
             .navigationBarTitle("個人資料")
+            .onAppear(perform: showData)
         }
     }
     
-    func showData(){
-        let requestParam = ["action" : "getDataById","del_id" : id]
-        executeTask(url_server!, requestParam) { (data, response, error) in
-            if error == nil {
-            if data != nil {
-                // 將輸入資料列印出來除錯用
-                print("input: \(String(data: data!, encoding: .utf8)!)")
+    func showData() {
+        guard let url = url else {
+            return
+        }
+       
+        print(id)
+        let requestParam = ["action" : "getDataById", "id" : id, "type" : "delivery", "state" : 4, "containDay" : false] as [String : Any]
+        executeTask(url, requestParam) { (data, response, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode([Order].self, from: data)
+                    self.orders = result
+                    self.calData()
+                } catch {
+                    print(error)
                 }
             }
         }
     }
-}
+    
+  
 
 struct PersonInfoView_Previews: PreviewProvider {
     static var previews: some View {

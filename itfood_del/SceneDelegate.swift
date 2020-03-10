@@ -75,7 +75,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
     }
     
-    
+    func toLoginView() {
+        let loginView = LoginView(loginSuccessful: false).environmentObject(userData)
+            .environmentObject(localManager)
+        .environmentObject(orderItemViewModel)
+        window?.rootViewController = UIHostingController(rootView: loginView)
+    }
     
     
     
