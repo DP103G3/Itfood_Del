@@ -36,9 +36,9 @@ struct DeliveryView: View {
                             
                         }) {
                             Image(systemName: "qrcode.viewfinder")
+                                .foregroundColor(.colorTextOnS).scaledToFit()
                         }.padding()
-                            .background(Color.white)
-                            .foregroundColor(.black)
+                            .background(Color.colorSecondary)
                             .font(.headline)
                             .clipShape(Rectangle())
                             .cornerRadius(8)
@@ -116,7 +116,7 @@ struct DeliveryView: View {
                             .tag(1)
                         }
                     }
-                }.pickerStyle(SegmentedPickerStyle())
+                    }.pickerStyle(SegmentedPickerStyle())
                     .padding(.trailing, 4)
                     .padding(.leading, 4)
                     
@@ -129,19 +129,21 @@ struct DeliveryView: View {
                     if selectedIndex == 0 {
                         ForEach(viewService.queueingOrders, id:\.order_id) { order in
                             OrderItemView(viewService: self.viewService, order: order)
-                        }.listStyle(DefaultListStyle())
-                        
+                        }
+                        .listStyle(DefaultListStyle())
+                        .listRowBackground(Color.colorItemBackground)
                     } else if selectedIndex == 1 {
                         
                         ForEach(viewService.deliveringOrders, id:\.order_id) { order in
                             OrderItemView(viewService: self.viewService, order: order)
                             
                         }.listStyle(PlainListStyle())
+                        .listRowBackground(Color.colorItemBackground)
                     }
-                }.background(Color.white.opacity(0))
-                    .frame(width: nil, height: 280, alignment: .top)
+                }
+                .frame(width: nil, height: 280, alignment: .top)
                 
-            }.offset(x: 0, y: -8)
+            }.offset(x: 0, y: -8).background(Color.colorBackground.frame(width: nil, height: 382, alignment: .top))
         }.sheet(isPresented: $showCompleteOrderSheet) {
                     CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
         //            CodeScannerView(codeTypes: [.qr], simulatedData: self.orderString ?? "", completion: self.handleScan)

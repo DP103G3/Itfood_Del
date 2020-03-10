@@ -114,7 +114,7 @@ struct InformationView: View {
              Spacer()
          }
          .navigationBarTitle("itfood服務條款")
-        }
+        }.background(Color.colorBackground)
     }
 }
 

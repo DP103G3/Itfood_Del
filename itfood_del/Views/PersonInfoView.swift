@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct PersonInfoView: View {
-    @EnvironmentObject var userData: UserData
-    @State private var id = ""
+    let id = UserDefaults.standard.integer(forKey: "del_id")
+    @State private var email = ""
     @State private var name = ""
     @State private var identityid = ""
     @State private var phone = ""
     
-    let url = URL(string: common_url + "DeliveryServlet")
+    let url = URL(string: common_url + "/DeliveryServlet")
     var person: Person!
     
     var body: some View {
@@ -26,52 +26,52 @@ struct PersonInfoView: View {
                 HStack{
                     Text("外送員編號：")
                         .foregroundColor(Color.colorTextOnP)
-                    TextField("編號", text:$id)
+                    TextField("編號", text:$email).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
                     
                 HStack{
                     Text("外送員姓名：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("姓名", text:$name)
+                    TextField("姓名", text:$name).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("身分證字號：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("身分證字號", text:$identityid)
+                    TextField("身分證字號", text:$identityid).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("外送員電話：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("電話", text:$phone)
+                    TextField("電話", text:$phone).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
-                Text("")
-                    .padding(20)
-                 NavigationLink(destination: PersonInfoUpdateView()) {
+                NavigationLink(destination: PersonInfoUpdateView()) {
                     HStack {
-                        
                         Text("修改資料")
                             .font(.body)
-                            .foregroundColor(Color.orange)
-                                      }
+                            .foregroundColor(Color.colorTextOnS)
+                            .padding(8)
+                            .background(Color.colorSecondary.cornerRadius(4))
                     }
-             Spacer()
+                }
+                Spacer()
             }
             .navigationBarTitle("個人資料")
-            .onAppear(perform: showData)
+        }.onTapGesture {
+            UIApplication.shared.endEditing()
         }
+        .onAppear(perform: showData)
+        .background(Color.colorBackground)
     }
     
     func showData() {
         guard let url = url else {
             return
         }
-       
-        print(id)
-        let requestParam = ["action" : "getDataById", "id" : id, "type" : "delivery", "state" : 4, "containDay" : false] as [String : Any]
+        let requestParam = ["action": "findById", "del_id": id] as [String : Any]
         executeTask(url, requestParam) { (data, response, error) in
             guard error == nil else {
                 print(error!.localizedDescription)
@@ -79,17 +79,18 @@ struct PersonInfoView: View {
             }
             if let data = data {
                 do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode([Order].self, from: data)
-                    self.orders = result
-                    self.calData()
+                    let person = try JSONDecoder().decode(Person.self, from: data)
+                    self.email = person.del_email
+                    self.name = person.del_name
+                    self.identityid = person.del_identityid
+                    self.phone = person.del_phone!
                 } catch {
                     print(error)
                 }
             }
         }
     }
-    
+}
   
 
 struct PersonInfoView_Previews: PreviewProvider {

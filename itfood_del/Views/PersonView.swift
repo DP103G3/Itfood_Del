@@ -22,38 +22,38 @@ struct PersonView: View {
 						Image("personicon")
 						Text("個人資料")
 							.font(.body)
-							.foregroundColor(Color.orange)
+							.foregroundColor(Color.colorTextOnP)
 					}
-				}
+				}.listRowBackground(Color.colorItemBackground)
 				NavigationLink(destination: PasswordView()) {
 					HStack {
 						Image("lock")
 						Text("修改密碼")
 							.font(.body)
-							.foregroundColor(Color.orange)
+							.foregroundColor(Color.colorTextOnP)
 					}
-				}
+				}.listRowBackground(Color.colorItemBackground)
 				NavigationLink(destination: InformationView()) {
 					HStack {
 						Image("question")
 						Text("相關資訊")
 							.font(.body)
-							.foregroundColor(Color.orange)
+							.foregroundColor(Color.colorTextOnP)
 					}
-				}
+				}.listRowBackground(Color.colorItemBackground)
 				NavigationLink(destination: AboutView()) {
 					HStack {
 						Image("about")
 						Text("關於我們")
 							.font(.body)
-							.foregroundColor(Color.orange)
+							.foregroundColor(Color.colorTextOnP)
 					}
-				}
+				}.listRowBackground(Color.colorItemBackground)
 					HStack {
 						Image("personicon")
 						Text("登出")
 							.font(.body)
-							.foregroundColor(Color.orange)
+							.foregroundColor(Color.colorTextOnP)
 							
 						
 						
@@ -67,7 +67,7 @@ struct PersonView: View {
 							self.userData.del_id = 0
 							(UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.toLoginView()
 							//							self.presentationMode.wrappedValue.dismiss()
-					}.animation(.default)
+					}.animation(.default).listRowBackground(Color.colorItemBackground)
 				
 			}
 			.navigationBarTitle("個人資訊")

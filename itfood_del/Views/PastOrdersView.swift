@@ -12,12 +12,12 @@ struct PastOrdersView: View {
     @EnvironmentObject var userData: UserData
     var body: some View {
         NavigationView{
-        List{
-            ForEach(userData.sortedOrdersArray[2], id: \.order_id) { order in
-                Text(order.order_id.description)
-            }
-        
-        }.navigationBarTitle("過去訂單")
+            List{
+                ForEach(userData.sortedOrdersArray[2], id: \.order_id) { order in
+                    Text(order.order_id.description)
+                }
+            
+            }.navigationBarTitle("過去訂單")
         }
     }
 }

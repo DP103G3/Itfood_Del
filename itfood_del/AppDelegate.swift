@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor(named: "colorPrimary")
+        navBarAppearance.largeTitleTextAttributes = [
+        .foregroundColor: UIColor(named: "colorTextOnP")!]
+        navBarAppearance.titleTextAttributes = [
+        .foregroundColor: UIColor(named: "colorTextOnP")!]
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().compactAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().tintColor = UIColor(named: "colorTextOnS")
+        UITabBar.appearance().backgroundColor = UIColor(named: "colorPrimaryLight")
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().tintColor = UIColor(named: "colorTextOnS")
+        UITabBar.appearance().unselectedItemTintColor = UIColor(named: "colorSecondary")
+        UITableView.appearance().backgroundColor = UIColor(named: "colorBackground")
+        UISegmentedControl.appearance().backgroundColor = UIColor(named: "colorPrimaryLight")
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(named: "colorSecondary")
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(named: "colorTextOnS")!], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(named: "colorTextOnP")!], for: .normal)
         return true
     }
 

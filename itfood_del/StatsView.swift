@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StatsView: View {
     
-    let id: Int
+    let id = UserDefaults.standard.integer(forKey: "del_id")
     let url = URL(string: common_url + "/OrderServlet")
     @State private var orders = [Order]()
     @State private var amount = 0
@@ -87,47 +87,70 @@ struct StatsView: View {
     }
     
     var body: some View {
-        VStack {
+        NavigationView {
             VStack {
-                HStack {
-                    Button(action: {
-                        self.showDatePicker = true
-                    }) {
-                        Text("\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])")
-                            .padding(8)
-                            .foregroundColor(.colorTextOnS)
-                            .background(Color.colorSecondary).cornerRadius(4)
+                VStack {
+                    HStack {
+                        Button(action: {
+                            self.showDatePicker = true
+                        }) {
+                            Text("\(self.yearSorce[self.selectYear]) / \(self.monthSorce[self.selectMonth])")
+                                .padding(8)
+                                .foregroundColor(.colorTextOnS)
+                                .background(Color.colorSecondary).cornerRadius(4)
+                        }
+                        .offset(CGSize(width: 16, height: 0))
+                        Spacer()
                     }
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Spacer()
+                            Text("收款總額").foregroundColor(.colorTextOnP)
+                            Spacer()
+                            Text("\(total)").foregroundColor(.colorTextOnP)
+                            Spacer()
+                        }
+                        Spacer()
+                        VStack {
+                            Spacer()
+                            Text("應得工資").foregroundColor(.colorTextOnP)
+                            Spacer()
+                            Text("\(amount * 70)").foregroundColor(.colorTextOnP)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .frame(width: nil, height: 200, alignment: .center)
+                    .offset(CGSize(width: 0, height: 16))
                 }
-                HStack {
-                    Spacer()
-                    VStack {
-                        Text("\(total)")
-                    }
-                    Spacer()
-                    VStack {
-                        Text("\(amount)")
-                    }
+                .offset(CGSize(width: 0, height: 16))
+                Spacer()
+                if showDatePicker {
+                    monthPicker
+                } else {
                     Spacer()
                 }
-            }.offset(CGSize(width: 0, height: 16))
-            Spacer()
-            if showDatePicker {
-                monthPicker
             }
-        }.background(Color.colorBackground)
+            .navigationBarTitle("結算報表")
+            .background(Color.colorBackground)
+        }
+        .onAppear(perform: loadData)
     }
     
     var monthPicker: some View {
         VStack {
-            Button(action: {
-                self.showDatePicker = false
-                self.loadData()
-                UIApplication.shared.windows.forEach { $0.endEditing(true) }
-            }) {
-                Text("確定").padding(8)
-                .foregroundColor(.colorTextOnS)
-                .background(Color.colorSecondary).cornerRadius(4)
+            HStack {
+                Spacer()
+                Button(action: {
+                    self.showDatePicker = false
+                    self.loadData()
+                    UIApplication.shared.windows.forEach { $0.endEditing(true) }
+                }) {
+                    Text("確定").padding(8)
+                    .foregroundColor(.colorTextOnS)
+                    .background(Color.colorSecondary).cornerRadius(4)
+                }.offset(CGSize(width: -16, height: 8))
             }
             HStack {
                 Picker(selection: $selectYear, label: Text("年")) {
