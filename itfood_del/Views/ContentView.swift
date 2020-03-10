@@ -14,6 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var userData : UserData
     @ObservedObject var viewService = ViewService()
     
+    
     var locationManager = CLLocationManager()
     init() {
         UITabBar.appearance().barTintColor = UIColor(named: "colorPrimary")
@@ -47,7 +48,7 @@ struct ContentView: View {
             }.tag(2)
             
             //MARK: 個人資訊Tab
-            PersonView(loginSuccessful: true).tabItem {
+            PersonView().tabItem {
                 VStack{
                     Image(systemName: "person")
                     Text("個人資訊")

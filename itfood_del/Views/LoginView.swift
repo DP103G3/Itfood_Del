@@ -10,8 +10,16 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var userData: UserData
-    @State var loginSuccessful : Bool
-    
+    @State var loginSuccessful : Bool = false
+    @State var username: String = ""
+    @State var password: String = ""
+    @State var showLoginError: Bool = false
+    @State var errorString: String = ""
+    let ERROR: Int = 0
+    let OK: Int = 1
+    let WRONG_PASSWORD: Int = 2
+    let SUSPENDED: Int = 3
+    var NOT_FOUND: Int = 4
     var body: some View {
         
         return Group {
@@ -19,19 +27,148 @@ struct LoginView: View {
              判斷是否有登入，有登入的話就進入主頁面
              */
             if !loginSuccessful {
-                Button(action: {
-                    UserDefaults.standard.set(1, forKey: "del_id")
-                    UserDefaults.standard.set(1, forKey: "areaCode")
-                    self.userData.del_id = 1
-                    self.loginSuccessful = true
-                    
-                } ){
-                    Text("Login")
-                }.animation(.default)
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .center) {
+                            VStack {
+                                Image("logo")
+                                    .resizable()
+                                HStack {
+                                    Spacer()
+                                    Text("外送員端")
+                                        .bold()
+                                        .font(.body)
+                                        .foregroundColor(Color.colorTextOnP)
+                                }
+                            }
+                            .scaledToFit()
+                            .padding(.leading, 40)
+                            .padding(.trailing, 40)
+                            
+                            TextField("Username (Email Address)", text: $username)
+                                .disableAutocorrection(true)
+                                .textContentType(.username)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(5.0)
+                                .padding(.bottom, 20)
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
+                            SecureField("Password", text: $password)
+                                .disableAutocorrection(true)
+                                .textContentType(.password)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(5.0)
+                                .padding(.bottom, 20)
+                                .padding(.leading, 20)
+                                .padding(.trailing, 20)
+                            Button(action: {
+                                self.login(email: self.username, password: self.password)
+                            }) {
+                                Text("登入")
+                                    .font(.headline)
+                                    .foregroundColor(.colorTextOnS)
+                                    .padding()
+                                    .frame(width: 220, height: 60)
+                                    .background(Color.colorSecondary)
+                                    .cornerRadius(15.0)
+                            }
+                        }
+                        Spacer()
+                    }
+                    Spacer()
+                }.background(Color.colorPrimary)
+                    .alert(isPresented: $showLoginError) {
+                        Alert(title: Text(errorString))
+                }.onAppear(perform: readLoginStatus)
+                
+                
             } else {
                 ContentView().animation(.default)
-                    
+                
             }
+        }
+    }
+    
+    func readLoginStatus() {
+        let userDefaults = UserDefaults.standard
+        let del_id = userDefaults.integer(forKey: "del_id")
+        if del_id != 0 {
+            self.loginSuccessful = true
+        }
+    }
+    
+    func login(email: String, password: String) {
+        if let url = URL(string: URLs.Delivery.getURL()) {
+            let encoder = JSONEncoder()
+            var request: URLRequest = URLRequest(url: url)
+            if email.isEmpty {
+                self.errorString = "請輸入帳號！"
+                self.showLoginError = true
+                return
+            } else if password.isEmpty {
+                self.errorString = "請輸入密碼！"
+                self.showLoginError = true
+                return
+            }
+            let loginMessage = LoginMessage(action: "login", del_email: email, del_password: password)
+            
+            request.httpMethod = "POST"
+            if let loginData = try? encoder.encode(loginMessage) {
+                request.httpBody = loginData
+            }
+            
+            
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data, let loginResult = try? JSONDecoder().decode(LoginResult.self, from: data){
+                    
+                    let result = loginResult.result
+                    if result != 1 {
+                        switch result {
+                        case self.ERROR :
+                            self.errorString = "伺服器異常，請稍後再試。"
+                            self.showLoginError = true
+                            return
+                        case self.WRONG_PASSWORD:
+                            self.errorString = "密碼錯誤！"
+                            self.showLoginError = true
+                            return
+                        case self.NOT_FOUND:
+                            self.errorString = "此帳號不存在！請檢查是否輸入正確"
+                            self.showLoginError = true
+                            return
+                        case self.SUSPENDED:
+                            self.errorString = "此帳號已被停權！"
+                            self.showLoginError = true
+                            return
+                        default:
+                            break
+                        }
+                        
+                    } else {
+                        let del_id = loginResult.del_id!
+                        let del_area_code = loginResult.del_area!
+                        let userDefaults = UserDefaults.standard
+                        DispatchQueue.main.async {
+                            self.loginSuccessful = true
+                            userDefaults.set(del_id, forKey: "del_id")
+                            userDefaults.set(del_area_code, forKey: "del_area_code")
+                            self.userData.del_id = del_id
+                        }
+                    }
+                    
+                } else {
+                    DispatchQueue.main.async {
+                        self.loginSuccessful = false
+                        self.showLoginError = true
+                        self.errorString = "伺服器異常，請稍後再試。"
+                    }
+                }
+            }.resume()
         }
     }
 }
@@ -41,3 +178,26 @@ struct LoginView_Previews: PreviewProvider {
         LoginView(loginSuccessful: true)
     }
 }
+
+struct LoginMessage : Codable {
+    let action: String
+    let del_email: String
+    let del_password: String
+}
+
+struct LoginResult: Codable {
+    let result: Int
+    let del_id: Int?
+    let del_area: Int?
+}
+
+
+//Button(action: {
+//    UserDefaults.standard.set(1, forKey: "del_id")
+//    UserDefaults.standard.set(1, forKey: "areaCode")
+//    self.userData.del_id = 1
+//    self.loginSuccessful = true
+//
+//} ){
+//    Text("Login")
+//}.animation(.default)
