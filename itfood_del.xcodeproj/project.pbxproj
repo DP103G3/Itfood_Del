@@ -140,17 +140,15 @@
 				CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */,
 				CD65E6452411604300AE8AD5 /* ContentView.swift */,
 				BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */,
-<<<<<<< HEAD
 				F52360CD241554AE001974A2 /* PersonView.swift */,
 				F52360D32415781F001974A2 /* PersonInfoView.swift */,
 				F52360D524158186001974A2 /* InformationView.swift */,
 				F52360D724159533001974A2 /* AboutView.swift */,
 				F52360D924159590001974A2 /* PasswordView.swift */,
 				F52360DD2416CFC4001974A2 /* PersonInfoUpdateView.swift */,
-=======
 				BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */,
 				BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */,
->>>>>>> cb6048566bff2584c52950aa7e4ec0165e70aaa7
+
 			);
 			path = Views;
 			sourceTree = "<group>";
