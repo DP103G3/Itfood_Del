@@ -30,12 +30,12 @@ struct ContentView: View {
             
             
             //MARK: 過去訂單Tab
-            PastOrdersView().tabItem {
-                VStack {
-                    Image(systemName: "folder")
-                    Text("過去訂單")
-                }
-            }
+//            PastOrdersView().tabItem {
+//                VStack {
+//                    Image(systemName: "folder")
+//                    Text("過去訂單")
+//                }
+//            }
             
             
             //MARK: 結算報表Tab

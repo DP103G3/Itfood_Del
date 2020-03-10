@@ -8,5 +8,5 @@
 
 import Foundation
 
-let common_url = "http://172.20.10.5:8080/Itfood_Web"
+let common_url = "http://172.20.10.2:8080/Itfood_Web"
 
