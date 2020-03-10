@@ -14,5 +14,6 @@ class OrderItemViewModel: ObservableObject {
     @Published var selectedOrder = [String: Any]()
     
     init() {
+        selectedOrder["selected"] = false
     }
 }

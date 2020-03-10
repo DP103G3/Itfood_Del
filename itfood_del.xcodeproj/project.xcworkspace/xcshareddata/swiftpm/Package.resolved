@@ -9,6 +9,15 @@
           "revision": "dbf7fa2891270f88aeafc872ea0beddb344af94b",
           "version": "3.4.0"
         }
+      },
+      {
+        "package": "CodeScanner",
+        "repositoryURL": "https://github.com/twostraws/CodeScanner",
+        "state": {
+          "branch": null,
+          "revision": "0519543ae943db85b360a96962242887daeca2b5",
+          "version": "1.0.3"
+        }
       }
     ]
   },

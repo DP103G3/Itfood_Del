@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		BB17E403240666640071B620 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB17E402240666640071B620 /* MapKit.framework */; };
 		BBB3E70224052A5E0096C9F5 /* exampleOrders.json in Resources */ = {isa = PBXBuildFile; fileRef = BBB3E70124052A5E0096C9F5 /* exampleOrders.json */; };
+		BBDC4541241615AE00C81B89 /* DeliveringOrderShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */; };
+		BBDC4543241615E000C81B89 /* DeliveringOrderMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */; };
+		BBDC454A24161C8900C81B89 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = BBDC454924161C8900C81B89 /* CodeScanner */; };
 		CD5548F723FE834100B902E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5548F623FE834100B902E9 /* Assets.xcassets */; };
 		CD5548FA23FE834100B902E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5548F923FE834100B902E9 /* Preview Assets.xcassets */; };
 		CD5548FD23FE834100B902E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5548FB23FE834100B902E9 /* LaunchScreen.storyboard */; };
@@ -31,7 +34,6 @@
 		CD65E6462411604300AE8AD5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E6452411604300AE8AD5 /* ContentView.swift */; };
 		CD65E64D241160B500AE8AD5 /* DeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E647241160B500AE8AD5 /* DeliveryView.swift */; };
 		CD65E64E241160B500AE8AD5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E648241160B500AE8AD5 /* LoginView.swift */; };
-		CD65E64F241160B500AE8AD5 /* MapQueueingOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E649241160B500AE8AD5 /* MapQueueingOrderView.swift */; };
 		CD65E650241160B500AE8AD5 /* OrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64A241160B500AE8AD5 /* OrderItemView.swift */; };
 		CD65E651241160B500AE8AD5 /* PastOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */; };
 		CD65E652241160B500AE8AD5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64C241160B500AE8AD5 /* MapView.swift */; };
@@ -49,6 +51,8 @@
 		BB742A86240DFF9C0089D068 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		BBA00631240D003F0067F6B9 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		BBB3E70124052A5E0096C9F5 /* exampleOrders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exampleOrders.json; sourceTree = "<group>"; };
+		BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveringOrderShopView.swift; sourceTree = "<group>"; };
+		BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveringOrderMemberView.swift; sourceTree = "<group>"; };
 		CD5548ED23FE833F00B902E9 /* itfood_del.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itfood_del.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5548F023FE833F00B902E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5548F223FE833F00B902E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +69,6 @@
 		CD65E6452411604300AE8AD5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CD65E647241160B500AE8AD5 /* DeliveryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryView.swift; sourceTree = "<group>"; };
 		CD65E648241160B500AE8AD5 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		CD65E649241160B500AE8AD5 /* MapQueueingOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapQueueingOrderView.swift; sourceTree = "<group>"; };
 		CD65E64A241160B500AE8AD5 /* OrderItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItemView.swift; sourceTree = "<group>"; };
 		CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastOrdersView.swift; sourceTree = "<group>"; };
 		CD65E64C241160B500AE8AD5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -80,6 +83,7 @@
 			files = (
 				BB17E403240666640071B620 /* MapKit.framework in Frameworks */,
 				CD555E6D240D22AA00EE4155 /* Charts in Frameworks */,
+				BBDC454A24161C8900C81B89 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,12 +120,13 @@
 			children = (
 				CD65E647241160B500AE8AD5 /* DeliveryView.swift */,
 				CD65E648241160B500AE8AD5 /* LoginView.swift */,
-				CD65E649241160B500AE8AD5 /* MapQueueingOrderView.swift */,
 				CD65E64C241160B500AE8AD5 /* MapView.swift */,
 				CD65E64A241160B500AE8AD5 /* OrderItemView.swift */,
 				CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */,
 				CD65E6452411604300AE8AD5 /* ContentView.swift */,
 				BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */,
+				BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */,
+				BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 			name = itfood_del;
 			packageProductDependencies = (
 				CD555E6C240D22AA00EE4155 /* Charts */,
+				BBDC454924161C8900C81B89 /* CodeScanner */,
 			);
 			productName = itfood_del;
 			productReference = CD5548ED23FE833F00B902E9 /* itfood_del.app */;
@@ -228,6 +234,7 @@
 			mainGroup = CD5548E423FE833F00B902E9;
 			packageReferences = (
 				CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */,
+				BBDC454824161C8900C81B89 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = CD5548EE23FE833F00B902E9 /* Products */;
 			projectDirPath = "";
@@ -265,11 +272,11 @@
 				CD65E64D241160B500AE8AD5 /* DeliveryView.swift in Sources */,
 				CD65E64024115FD100AE8AD5 /* Shop.swift in Sources */,
 				CD65E6542411613600AE8AD5 /* LocationManager.swift in Sources */,
+				BBDC4541241615AE00C81B89 /* DeliveringOrderShopView.swift in Sources */,
 				CD65E63824115CA600AE8AD5 /* SocketService.swift in Sources */,
 				CD65E63724115C9F00AE8AD5 /* AppDelegate.swift in Sources */,
 				CD65E63524115C9300AE8AD5 /* UserData.swift in Sources */,
 				CD65E63424115C8D00AE8AD5 /* OrderItemViewModel.swift in Sources */,
-				CD65E64F241160B500AE8AD5 /* MapQueueingOrderView.swift in Sources */,
 				CD65E63324115C8700AE8AD5 /* SceneDelegate.swift in Sources */,
 				CD65E63224115C8100AE8AD5 /* DeliveryMessage.swift in Sources */,
 				CD65E650241160B500AE8AD5 /* OrderItemView.swift in Sources */,
@@ -280,6 +287,7 @@
 				CD65E62A24115C4600AE8AD5 /* AreaOrders.swift in Sources */,
 				CD65E62924115C4000AE8AD5 /* itfood_del.xcdatamodeld in Sources */,
 				CD65E62624115C2500AE8AD5 /* ViewService.swift in Sources */,
+				BBDC4543241615E000C81B89 /* DeliveringOrderMemberView.swift in Sources */,
 				CD65E62424115C1700AE8AD5 /* Url.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,6 +402,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BBDC454824161C8900C81B89 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
@@ -405,6 +421,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BBDC454924161C8900C81B89 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BBDC454824161C8900C81B89 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
 		CD555E6C240D22AA00EE4155 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CD555E6B240D22AA00EE4155 /* XCRemoteSwiftPackageReference "Charts" */;
