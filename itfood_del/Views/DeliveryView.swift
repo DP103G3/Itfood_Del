@@ -36,9 +36,12 @@ struct DeliveryView: View {
                             
                         }) {
                             Image(systemName: "qrcode.viewfinder")
-                                .foregroundColor(.colorTextOnS).scaledToFit()
-                        }.padding()
+                            .resizable()
+                                .frame(width: 24, height: 24)
+                            .scaledToFit()
+                        }.padding(6)
                             .background(Color.colorSecondary)
+                            .foregroundColor(.colorTextOnS)
                             .font(.headline)
                             .clipShape(Rectangle())
                             .cornerRadius(8)

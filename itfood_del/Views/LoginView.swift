@@ -164,7 +164,7 @@ struct LoginView: View {
                         DispatchQueue.main.async {
                             self.loginSuccessful = true
                             userDefaults.set(del_id, forKey: "del_id")
-                            userDefaults.set(del_area_code, forKey: "del_area_code")
+                            userDefaults.set(del_area_code, forKey: "areaCode")
                             self.userData.del_id = del_id
                         }
                     }
@@ -184,13 +184,6 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(loginSuccessful: true)
-    }
-}
-
-struct hintText: View {
-    let hint: String
-    var body: some View {
-        Text(hint).foregroundColor(.colorBackground)
     }
 }
 
