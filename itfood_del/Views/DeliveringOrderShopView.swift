@@ -16,6 +16,7 @@ struct DeliveringOrderShopView: View {
     @State private var showCompleteOrderSheet = false
     @State private var showAcceptSuccessAlert = false
     @State private var showAcceptFailureAlert = false
+//    @State private var selectedOrder: Order
     
     var body: some View {
         VStack {
@@ -89,6 +90,7 @@ struct DeliveringOrderShopView: View {
                         .padding(.trailing)
                         .padding(.bottom, 4)
                         .onTapGesture {
+//                            self.selectedOrder = self.order
                             self.showCompleteOrderAlert = true
                     }
                 }
@@ -118,7 +120,9 @@ struct OrderQRCodeView: View {
     let ciContext = CIContext()
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewService: ViewService
-    @State private var order_id: String?
+    var order_id: String {
+        order.order_id.description
+    }
     @State private var del_name: String?
     @State private var acceptanceType: String?
     @State private var acceptanceName: String?
@@ -127,7 +131,7 @@ struct OrderQRCodeView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         encoder.dateEncodingStrategy = .formatted(dateFormatter)
-        if let data = try? encoder.encode(order) {
+        if let data = try? encoder.encode(order.order_id) {
             print("ORDER QR CODE: " + (String(data: data, encoding: .utf8) ?? ""))
             guard let ciFilter = CIFilter(name: "CIQRCodeGenerator") else {return}
             ciFilter.setValue(data, forKey: "inputMessage")
@@ -136,8 +140,6 @@ struct OrderQRCodeView: View {
             let ciImage_largeQR = ciImage_smallQR.transformed(by: transform)
             let cgImage = self.ciContext.createCGImage(ciImage_largeQR, from: ciImage_largeQR.extent)
             self.uiImage = UIImage(cgImage: cgImage!)
-            
-            self.order_id = order.order_id.description
             
             if order.order_state == 2 {
                 acceptanceType = "店家"
@@ -163,7 +165,7 @@ struct OrderQRCodeView: View {
                         .background(Color.red)
                         .cornerRadius(4)
                         .padding(.trailing, 4)
-                    Text(order_id ?? "")
+                    Text(order_id)
                         .bold()
                 }.padding(.bottom, 4)
                 HStack {

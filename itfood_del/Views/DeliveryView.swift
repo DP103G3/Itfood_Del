@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import CodeScanner
 
 
 struct DeliveryView: View {
@@ -16,12 +17,36 @@ struct DeliveryView: View {
     @EnvironmentObject var orderItemViewModel: OrderItemViewModel
     @State var selectedIndex : Int
     @State var followUser: Int = 0
+    @State var showCompleteOrderSheet = false
+    @State var showLoginAlert = false
     
     var orderTypes = ["待接單", "送餐中"]
     var body: some View {
         return VStack {
             ZStack {
                 MapView(followUser: followUser, selectedOrder: orderItemViewModel.selectedOrder).edgesIgnoringSafeArea(.all)
+                VStack {
+                    HStack {
+                        Button(action: {
+                            if self.viewService.connectToSocket {
+                                self.showCompleteOrderSheet = true
+                            } else {
+                                self.showLoginAlert = true
+                            }
+                            
+                        }) {
+                            Image(systemName: "qrcode.viewfinder")
+                        }.padding()
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .font(.headline)
+                            .clipShape(Rectangle())
+                            .cornerRadius(8)
+                            .padding(.leading)
+                        Spacer()
+                    }
+                    Spacer()
+                }
                 VStack {
                     Spacer()
                     HStack {
@@ -117,9 +142,43 @@ struct DeliveryView: View {
                     .frame(width: nil, height: 280, alignment: .top)
                 
             }.offset(x: 0, y: -8)
+        }.sheet(isPresented: $showCompleteOrderSheet) {
+                    CodeScannerView(codeTypes: [.qr], completion: self.handleScan)
+        //            CodeScannerView(codeTypes: [.qr], simulatedData: self.orderString ?? "", completion: self.handleScan)
+                }
+        .alert(isPresented: self.$showLoginAlert){
+            Alert(title: Text("請先上線！"))
         }
         
         
         
+    }
+    
+    func handleScan(result: Result<String, CodeScannerView.ScanError>) {
+        self.showCompleteOrderSheet = false
+        switch result {
+        case .success(let code):
+            let decoder = JSONDecoder()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            if let data = code.data(using: .utf8), let order_id = try? decoder.decode(Int.self, from: data) {
+                let orders = self.viewService.deliveringOrders.filter { (order) -> Bool in
+                    order.order_id == order_id
+                }
+                
+                
+                guard !orders.isEmpty else {
+                    print("Order doesn't match.")
+                    return
+                }
+                print("Scanned success")
+                let order = orders[0]
+                self.viewService.sendCompleteMessage(order: order)
+                return
+            }
+        case .failure(let error):
+            print("Scanning failed" + error.localizedDescription)
+        }
     }
 }
