@@ -120,17 +120,19 @@ struct QueueingOrderView: View {
                             Text("出發地")
                                 .bold()
                                 .padding(4)
-                                .background(Color.red)
+                                .background(Color.colorRed)
                                 .foregroundColor(.white)
                                 .font(.caption)
                                 .cornerRadius(4)
                             
                             VStack(alignment: .center){
                                 Text(order.shop.name)
+                                    .foregroundColor(.colorNormalText)
                                     .font(.caption)
                                     .bold()
                                     .padding(4)
                                 Text(order.shop.address)
+                                    .foregroundColor(.colorNormalText)
                                     .padding(4)
                                     .font(.footnote)
                             }.tag("fromInfo")
@@ -150,6 +152,7 @@ struct QueueingOrderView: View {
                             
                             
                             Text(order.address.info)
+                                .foregroundColor(.colorNormalText)
                                 .font(.footnote)
                                 .padding(8)
                             
@@ -160,6 +163,7 @@ struct QueueingOrderView: View {
                 VStack(alignment: .center) {
                     Text("距離店家")
                         .padding(.bottom, 6)
+                        .foregroundColor(.colorTextOnP)
                     HStack {
                         Text (distance + " " + distanceUnit)
                             .bold()

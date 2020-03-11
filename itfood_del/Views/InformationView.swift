@@ -110,7 +110,7 @@ struct InformationView: View {
             itfood.com.tw的所有權為itfood GmbH。 若您有任何訂餐相關問題，請使用live chat線上客服系統與我們客服團隊聯繫，謝謝。
             """)
             .padding(20)
-            .foregroundColor(Color.colorTextOnP)
+                .foregroundColor(Color.colorNormalText)
              Spacer()
          }
          .navigationBarTitle("itfood服務條款")

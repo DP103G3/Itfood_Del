@@ -12,6 +12,7 @@ extension Color {
     static let colorPrimary = Color("colorPrimary")
     static let colorPrimaryLight = Color("colorPrimaryLight")
     static let colorSecondary = Color("colorSecondary")
+    static let colorRed = Color("colorRed")
     static let colorBackground = Color("colorBackground")
     static let colorItemBackground = Color("colorItemBackground")
     static let colorNormalText = Color("colorNormalText")

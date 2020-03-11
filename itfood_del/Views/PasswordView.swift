@@ -22,35 +22,48 @@ struct PasswordView: View {
                     VStack{
                         Text("請輸入舊密碼：")
                             .foregroundColor(Color.colorTextOnP)
-                        TextField("舊密碼", text:$obsoletePassword)
-                            .border(Color.gray)
-                            .padding(20)
+                        SecureField("舊密碼", text:$obsoletePassword)
+                            .frame(width: 300, height: 50, alignment: .center)
+                            .padding(.horizontal, 16)
+                            .foregroundColor(.colorTextOnP)
+                            .background(Color.colorItemBackground)
+                            .cornerRadius(5.0)
                         }.padding(20)
                     VStack{
                         Text("請輸入新密碼：")
                             .foregroundColor(Color.colorTextOnP)
-                        TextField("新密碼", text:$newPassword)
-                            .border(Color.gray)
-                            .padding(20)
+                        SecureField("新密碼", text:$newPassword)
+                            .frame(width: 300, height: 50, alignment: .center)
+                            .padding(.horizontal, 16)
+                            .foregroundColor(.colorTextOnP)
+                            .background(Color.colorItemBackground)
+                            .cornerRadius(5.0)
                         }.padding(20)
                     VStack{
                         Text("請再輸入一次新密碼：")
                             .foregroundColor(Color.colorTextOnP)
-                        TextField("確認新密碼", text:$checkPassword)
-                            .border(Color.gray)
-                            .padding(20)
+                        SecureField("確認新密碼", text:$checkPassword)
+                            .frame(width: 300, height: 50, alignment: .center)
+                            .padding(.horizontal, 16)
+                            .foregroundColor(.colorTextOnP)
+                            .background(Color.colorItemBackground)
+                            .cornerRadius(5.0)
                     }.padding(20)
                    
                     Button(action: {
                                        
-                                   } ){
-                                       Text("送出")
-                                   }.animation(.default)
-                    .padding(20)
-                    
+                   } ){
+                       Text("送出")
+                   }.animation(.default)
+                    .padding(8)
+                    .background(Color.colorSecondary)
+                    .cornerRadius(4)
                      Spacer()
                 } .navigationBarTitle("修改密碼")
             }
+        }
+        .onTapGesture {
+            UIApplication.shared.endEditing()
         }
     }
 }
