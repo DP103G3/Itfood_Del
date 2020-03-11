@@ -118,7 +118,6 @@ struct OrderQRCodeView: View {
     var encoder = JSONEncoder()
     @State var uiImage: UIImage?
     let ciContext = CIContext()
-    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewService: ViewService
     var order_id: String {
         order.order_id.description

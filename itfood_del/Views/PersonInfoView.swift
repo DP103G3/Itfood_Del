@@ -19,7 +19,7 @@ struct PersonInfoView: View {
     var person: Person!
     
     var body: some View {
-       
+        
         //let id:Int UserDefaults.standard.object(forKey: "del_id")
         ScrollView{
             VStack{
@@ -29,36 +29,36 @@ struct PersonInfoView: View {
                     TextField("編號", text:$id)
                     Spacer()
                 }.padding(20)
-                    
+                
                 HStack{
                     Text("外送員姓名：")
-                    .foregroundColor(Color.colorTextOnP)
+                        .foregroundColor(Color.colorTextOnP)
                     TextField("姓名", text:$name)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("身分證字號：")
-                    .foregroundColor(Color.colorTextOnP)
+                        .foregroundColor(Color.colorTextOnP)
                     TextField("身分證字號", text:$identityid)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("外送員電話：")
-                    .foregroundColor(Color.colorTextOnP)
+                        .foregroundColor(Color.colorTextOnP)
                     TextField("電話", text:$phone)
                     Spacer()
                 }.padding(20)
                 Text("")
                     .padding(20)
-                 NavigationLink(destination: PersonInfoUpdateView()) {
+                NavigationLink(destination: PersonInfoUpdateView()) {
                     HStack {
                         
                         Text("修改資料")
                             .font(.body)
                             .foregroundColor(Color.orange)
-                                      }
                     }
-             Spacer()
+                }
+                Spacer()
             }
             .navigationBarTitle("個人資料")
             .onAppear(perform: showData)
@@ -69,7 +69,7 @@ struct PersonInfoView: View {
         guard let url = url else {
             return
         }
-       
+        
         print(id)
         let requestParam = ["action" : "getDataById", "id" : id, "type" : "delivery", "state" : 4, "containDay" : false] as [String : Any]
         executeTask(url, requestParam) { (data, response, error) in
@@ -81,16 +81,17 @@ struct PersonInfoView: View {
                 do {
                     let decoder = JSONDecoder()
                     let result = try decoder.decode([Order].self, from: data)
-                    self.orders = result
-                    self.calData()
+//                    self.orders = result
+//                    self.calData()
                 } catch {
                     print(error)
                 }
             }
         }
     }
-    
-  
+}
+
+
 
 struct PersonInfoView_Previews: PreviewProvider {
     static var previews: some View {

@@ -80,6 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .environmentObject(localManager)
         .environmentObject(orderItemViewModel)
         window?.rootViewController = UIHostingController(rootView: loginView)
+        
     }
     
     

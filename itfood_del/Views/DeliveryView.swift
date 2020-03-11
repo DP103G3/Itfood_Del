@@ -139,7 +139,7 @@ struct DeliveryView: View {
                         ForEach(viewService.deliveringOrders, id:\.order_id) { order in
                             OrderItemView(viewService: self.viewService, order: order)
                             
-                        }.listStyle(PlainListStyle())
+                        }.listStyle(DefaultListStyle())
                     }
                 }.background(Color.white.opacity(0))
                     .frame(width: nil, height: 280, alignment: .top)

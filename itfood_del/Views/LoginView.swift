@@ -157,6 +157,8 @@ struct LoginView: View {
                             self.loginSuccessful = true
                             userDefaults.set(del_id, forKey: "del_id")
                             userDefaults.set(del_area_code, forKey: "areaCode")
+                            userDefaults.set(email, forKey: "email")
+                            userDefaults.set(password, forKey: "password")
                             self.userData.del_id = del_id
                         }
                     }
