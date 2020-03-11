@@ -18,7 +18,7 @@ public struct OrderItemView: View {
     
     @ObservedObject var viewService: ViewService
     
-   @State var order : Order
+    var order : Order
     
     var userLatitude: String {
         return "\(locationManager.lastLocation?.coordinate.latitude ?? 0)"

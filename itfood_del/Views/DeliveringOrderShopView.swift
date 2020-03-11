@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DeliveringOrderShopView: View {
-    @State var order: Order
+    var order: Order
     var presentButton: Bool
     @ObservedObject var viewService: ViewService
     @State private var showCompleteOrderAlert = false
@@ -114,7 +114,7 @@ struct DeliveringOrderShopView: View {
 }
 
 struct OrderQRCodeView: View {
-    @State var order: Order
+    var order: Order
     var encoder = JSONEncoder()
     @State var uiImage: UIImage?
     let ciContext = CIContext()
