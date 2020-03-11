@@ -13,7 +13,6 @@ struct DeliveringOrderMemberView: View {
     var order: Order
     @ObservedObject var viewService: ViewService
     @State private var showCompleteOrderAlert = false
-    @State private var showConfirmOrderAlert = false
     @State private var orderString: String?
     
     var body: some View {
@@ -69,7 +68,19 @@ struct DeliveringOrderMemberView: View {
                 Spacer()
             }.padding(.leading)
                 .padding(.trailing)
-                .padding(.top)
+            Divider()
+            HStack{
+                Text("訂單金額")
+                    .bold()
+                    .font(.footnote)
+                    .padding(4)
+                    .background(Color.orange)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+                Text("$ " + order.order_ttprice.description)
+                Spacer()
+            }.padding(.leading)
+                .padding(.trailing)
             Divider()
             HStack {
                 Text("目的地")
@@ -86,42 +97,40 @@ struct DeliveringOrderMemberView: View {
                 .padding(.leading)
                 .padding(.bottom, 4)
                 .padding(.top, 4)
-                .padding(.bottom, 4)
+                .padding(.bottom)
             
-//            Divider()
-//            HStack{
-//                Text("完成訂單")
-//                    .frame(maxWidth: .infinity)
-//                    .padding(6)
-//                    .padding(.top, 4)
-//                    .padding(.bottom, 4)
-//                    .background(Color.colorSecondary)
-//                    .foregroundColor(.colorTextOnS)
-//                    .cornerRadius(8)
-//                    .padding(.leading)
-//                    .padding(.trailing)
-//                    .padding(.bottom, 4)
-//                    .onTapGesture {
-//                        self.showCompleteOrderAlert.toggle()
-//                }
-//            }
-        }.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 2))
-            .alert(isPresented: self.$showConfirmOrderAlert) {
-                Alert(title: Text("訂單確認成功！"))
-        }
-            .alert(isPresented: self.$showCompleteOrderAlert) {
-                var paymentStatus: String?
-                if order.pay_id != 0 {
-                    paymentStatus = "已付款"
-                } else {
-                    paymentStatus = "未付款，收取現金"
-                }
-                var orderDetails: String = ""
-                for orderDetail: OrderDetail in self.order.orderDetails! {
-                    orderDetails.append("\n" + orderDetail.dish.name + " x" + orderDetail.od_count.description + "\n")
-                }
-                return Alert(title: Text("完成訂單"), message: Text(orderDetails) + Text("總計: \(order.order_ttprice)\n") + Text("付款狀態: \(paymentStatus!)"), primaryButton: .default(Text("確認"), action: {
-                }), secondaryButton: .cancel())
+            //            Divider()
+            //            HStack{
+            //                Text("完成訂單")
+            //                    .frame(maxWidth: .infinity)
+            //                    .padding(6)
+            //                    .padding(.top, 4)
+            //                    .padding(.bottom, 4)
+            //                    .background(Color.colorSecondary)
+            //                    .foregroundColor(.colorTextOnS)
+            //                    .cornerRadius(8)
+            //                    .padding(.leading)
+            //                    .padding(.trailing)
+            //                    .padding(.bottom, 4)
+            //                    .onTapGesture {
+            //                        self.showCompleteOrderAlert.toggle()
+            //                }
+            //            }
+        }.overlay(RoundedRectangle(cornerRadius: 10)
+            .stroke(Color(.sRGB, red: 150/255, green: 150/255, blue: 150/255, opacity: 0.3), lineWidth: 2))
+        .alert(isPresented: self.$showCompleteOrderAlert) {
+            var paymentStatus: String?
+            if order.pay_id != 0 {
+                paymentStatus = "已付款"
+            } else {
+                paymentStatus = "未付款，收取現金"
+            }
+            var orderDetails: String = ""
+            for orderDetail: OrderDetail in self.order.orderDetails! {
+                orderDetails.append("\n" + orderDetail.dish.name + " x" + orderDetail.od_count.description + "\n")
+            }
+            return Alert(title: Text("完成訂單"), message: Text(orderDetails) + Text("總計: \(order.order_ttprice)\n") + Text("付款狀態: \(paymentStatus!)"), primaryButton: .default(Text("確認"), action: {
+            }), secondaryButton: .cancel())
         }
     }
     

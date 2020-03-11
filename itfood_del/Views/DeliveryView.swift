@@ -140,8 +140,11 @@ struct DeliveryView: View {
                         ForEach(viewService.deliveringOrders, id:\.order_id) { order in
                             OrderItemView(viewService: self.viewService, order: order)
                             
-                        }.listStyle(PlainListStyle())
+                        }.listStyle(DefaultListStyle())
                         .listRowBackground(Color.colorItemBackground)
+                        .onAppear {
+                           UITableView.appearance().separatorColor = .clear
+                        }
                     }
                 }
                 .frame(width: nil, height: 280, alignment: .top)
