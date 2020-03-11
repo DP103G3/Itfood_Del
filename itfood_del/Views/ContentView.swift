@@ -17,7 +17,6 @@ struct ContentView: View {
     
     var locationManager = CLLocationManager()
     init() {
-        UITabBar.appearance().barTintColor = UIColor(named: "colorPrimary")
     }
     var body: some View {
         TabView{
@@ -31,16 +30,16 @@ struct ContentView: View {
             
             
             //MARK: 過去訂單Tab
-            PastOrdersView().tabItem {
-                VStack {
-                    Image(systemName: "folder")
-                    Text("過去訂單")
-                }
-            }
+//            PastOrdersView().tabItem {
+//                VStack {
+//                    Image(systemName: "folder")
+//                    Text("過去訂單")
+//                }
+//            }
             
             
             //MARK: 結算報表Tab
-            StatsView(id: 1).tabItem {
+            StatsView().tabItem {
                 VStack {
                     Image(systemName: "calendar")
                     Text("結算報表")
@@ -58,7 +57,7 @@ struct ContentView: View {
             //        .onAppear(perform: loadOrders)
             .onAppear(perform: showLocationRequest)
             .edgesIgnoringSafeArea(.top)
-        
+            .accentColor(.colorTextOnP)
     }
     
     /*

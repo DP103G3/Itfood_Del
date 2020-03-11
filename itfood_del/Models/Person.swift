@@ -6,20 +6,20 @@
 //  Copyright © 2020 dp103g3. All rights reserved.
 //
 
-class Person:Codable{
-    var id: Int
-    var email: String
-    var password: String
-    var name: String
-    var identityid: String
-    var phone: String?
+class Person: Codable{
+    var del_id: Int
+    var del_email: String
+    var del_password: String
+    var del_name: String
+    var del_identityid: String
+    var del_phone: String?
     
-    public init(_ id: Int, _ email: String, _ password: String, _ name: String, _ identityid: String, _ phone: String) {
-        self.id = id
-        self.email = email
-        self.name = name
-        self.identityid = identityid
-        self.phone = phone
-        self.password = password
+    public init(_ del_id: Int, _ del_email: String, _ del_password: String, _ del_name: String, _ del_identityid: String, _ del_phone: String) {
+        self.del_id = del_id
+        self.del_email = del_email
+        self.del_name = del_name
+        self.del_identityid = del_identityid
+        self.del_phone = del_phone
+        self.del_password = del_password
     }
 }
