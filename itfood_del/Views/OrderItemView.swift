@@ -18,7 +18,7 @@ public struct OrderItemView: View {
     
     @ObservedObject var viewService: ViewService
     
-    var order : Order
+   var order : Order
     
     var userLatitude: String {
         return "\(locationManager.lastLocation?.coordinate.latitude ?? 0)"
@@ -66,12 +66,6 @@ public struct OrderItemView: View {
                 }
             } else {
                 DeliveringOrderView(viewService: viewService, order_state: order.order_state, order: order)
-                    .onTapGesture {
-//                        self.orderItemViewModel.selectedOrder.removeAll()
-                        self.orderItemViewModel.selectedOrder["order"] = self.order
-                        self.orderItemViewModel.selectedOrder["selected"] = true
-                        self.orderItemViewModel.selectedOrder["status"] = "delivering"
-                }
             }
         }.onAppear(perform: addOrderExpanded)
     }
@@ -232,8 +226,6 @@ struct DeliveringOrderView: View {
     @State private var distanceUnit : String = "m"
     @State private var showCompleteOrderAlert = false
     @State private var showCompleteOrderSheet = false
-
-    
     var order : Order
     
     var userLatitude: String {
@@ -248,10 +240,28 @@ struct DeliveringOrderView: View {
         return Group {
             if order_state == 1 {
                 DeliveringOrderShopView(order: order, presentButton: false, viewService: viewService)
+                .onTapGesture {
+                //                        self.orderItemViewModel.selectedOrder.removeAll()
+                                        self.orderItemViewModel.selectedOrder["order"] = self.order
+                                        self.orderItemViewModel.selectedOrder["selected"] = true
+                                        self.orderItemViewModel.selectedOrder["status"] = "deliveringShop"
+                                }
             } else if order_state == 2 {
                 DeliveringOrderShopView(order: order, presentButton: true, viewService: viewService)
+                .onTapGesture {
+                //                        self.orderItemViewModel.selectedOrder.removeAll()
+                                        self.orderItemViewModel.selectedOrder["order"] = self.order
+                                        self.orderItemViewModel.selectedOrder["selected"] = true
+                                        self.orderItemViewModel.selectedOrder["status"] = "deliveringShop"
+                                }
             } else if order.order_state == 3 {
                 DeliveringOrderMemberView(order: order, viewService: viewService)
+                .onTapGesture {
+                //                        self.orderItemViewModel.selectedOrder.removeAll()
+                                        self.orderItemViewModel.selectedOrder["order"] = self.order
+                                        self.orderItemViewModel.selectedOrder["selected"] = true
+                                        self.orderItemViewModel.selectedOrder["status"] = "deliveringMember"
+                                }
             }
         }
     }

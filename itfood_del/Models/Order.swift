@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 let ipAddress: String = "172.20.10.2"
 //let ipAddress: String = "192.168.43.134"
 let url = "http://\(ipAddress)/Itfood_Web/del"
@@ -36,10 +37,10 @@ struct Order : Codable, Hashable{
     let order_area : Int
     let order_type : Int
     let orderDetails : [OrderDetail]?
-    
+
     var isExpanded: Bool?
-    
-    
+
+
     func description () -> String{
         "{id: " + order_id.description + "\nshop_name: " + shop.name + "}\n"
     }
@@ -68,7 +69,7 @@ enum URLs : Hashable {
     case Delivery
     case OrderSocket
     case DeliverySocket
-    
+
     func getURL() -> String {
         switch self {
         case .Order:

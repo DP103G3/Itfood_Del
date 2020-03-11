@@ -19,7 +19,7 @@ struct PersonInfoView: View {
     var person: Person!
     
     var body: some View {
-       
+        
         //let id:Int UserDefaults.standard.object(forKey: "del_id")
         ScrollView{
             VStack{
@@ -29,7 +29,7 @@ struct PersonInfoView: View {
                     TextField("編號", text:$email).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
-                    
+                
                 HStack{
                     Text("外送員姓名：")
                     .foregroundColor(Color.colorTextOnP)

@@ -80,7 +80,7 @@ struct MapView: UIViewRepresentable{
         var sourceMapItem = MKMapItem()
         if status == OrderStatus.queueing.rawValue {
             sourceMapItem = mapItems["shop"]!
-        } else if status == OrderStatus.delivering.rawValue {
+        } else if (status == OrderStatus.deliveringShop.rawValue) || (status == OrderStatus.deliveryingMember.rawValue) {
             sourceMapItem = mapItems["currentPosition"]!
         }
         let destinationMapItem = mapItems["destination"]
@@ -93,7 +93,8 @@ struct MapView: UIViewRepresentable{
     
     enum OrderStatus: String {
         case queueing = "queueing"
-        case delivering = "delivering"
+        case deliveringShop = "deliveringShop"
+        case deliveryingMember = "deliveringMember"
     }
     
     
@@ -117,8 +118,11 @@ struct MapView: UIViewRepresentable{
             if self.status == OrderStatus.queueing.rawValue {
                 sourceAnnotation.subtitle = order.shop.address
                 mapView.addAnnotations([sourceAnnotation, destinationAnnotation])
-            } else if self.status == OrderStatus.delivering.rawValue {
+            } else if self.status == OrderStatus.deliveringShop.rawValue {
                 destinationAnnotation.subtitle = order.shop.address
+                mapView.addAnnotations([destinationAnnotation])
+            } else if self.status == OrderStatus.deliveryingMember.rawValue {
+                destinationAnnotation.title = order.address.info
                 mapView.addAnnotations([destinationAnnotation])
             }
             
@@ -167,7 +171,7 @@ struct MapView: UIViewRepresentable{
             destinationMapItem.phoneNumber = destinationPhone
             mapItems["destination"] = destinationMapItem
             
-        } else if status == OrderStatus.delivering.rawValue {
+        } else if status == OrderStatus.deliveringShop.rawValue {
             var currentMapItem = MKMapItem()
             let currentLat = Double(self.userLatitude)
             let currentLong = Double(self.userLongitude)
@@ -185,6 +189,28 @@ struct MapView: UIViewRepresentable{
             let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
             let destinationName = order.shop.name
             let destinationPhone = order.shop.phone
+            destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
+            destinationMapItem.name = destinationName
+            destinationMapItem.phoneNumber = destinationPhone
+            mapItems["destination"] = destinationMapItem
+        } else if status == OrderStatus.deliveryingMember.rawValue {
+            var currentMapItem = MKMapItem()
+            let currentLat = Double(self.userLatitude)
+            let currentLong = Double(self.userLongitude)
+            let currentCoordinate = CLLocationCoordinate2D(latitude: currentLat!, longitude: currentLong!)
+            let currentPlaceMark = MKPlacemark(coordinate: currentCoordinate)
+            currentMapItem = MKMapItem(placemark: currentPlaceMark)
+            let currentName = "我的位置"
+            currentMapItem.name = currentName
+            mapItems["currentPosition"] = currentMapItem
+            
+            var destinationMapItem = MKMapItem()
+            let destinationLat = order.address.latitude
+            let destinationLong = order.address.longitude
+            let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
+            let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
+            let destinationName = order.address.info
+            let destinationPhone = order.order_phone
             destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
             destinationMapItem.name = destinationName
             destinationMapItem.phoneNumber = destinationPhone
