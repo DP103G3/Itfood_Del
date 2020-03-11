@@ -61,36 +61,36 @@ struct PersonInfoView: View {
              Spacer()
             }
             .navigationBarTitle("個人資料")
-            .onAppear(perform: showData)
+           // .onAppear(perform: showData)
         }
     }
     
-    func showData() {
-        guard let url = url else {
-            return
-        }
-       
-        print(id)
-        let requestParam = ["action" : "getDataById", "id" : id, "type" : "delivery", "state" : 4, "containDay" : false] as [String : Any]
-        executeTask(url, requestParam) { (data, response, error) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode([Order].self, from: data)
-                    self.orders = result
-                    self.calData()
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
+//    func showData() {
+//        guard let url = url else {
+//            return
+//        }
+//       
+//        print(id)
+//        let requestParam = ["action" : "getDataById", "id" : id, "type" : "delivery", "state" : 4, "containDay" : false] as [String : Any]
+//        executeTask(url, requestParam) { (data, response, error) in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//            if let data = data {
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let result = try decoder.decode([Order].self, from: data)
+//                    self.orders = result
+//                    self.calData()
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//        }
+//    }
     
-  
+}
 
 struct PersonInfoView_Previews: PreviewProvider {
     static var previews: some View {
