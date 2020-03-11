@@ -8,7 +8,14 @@
 
 import SwiftUI
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 struct LoginView: View {
+    
     @EnvironmentObject var userData: UserData
     @State var loginSuccessful : Bool = false
     @State var username: String = ""
@@ -34,37 +41,35 @@ struct LoginView: View {
                         VStack(alignment: .center) {
                             VStack {
                                 Image("logo")
-                                    .resizable()
+                                    .resizable().frame(width: 200, height: 90)
                                 HStack {
                                     Spacer()
                                     Text("外送員端")
                                         .bold()
                                         .font(.body)
-                                        .foregroundColor(Color.colorTextOnP)
+                                        .foregroundColor(Color.colorTextOnP).offset(CGSize(width: 0, height: -20))
                                 }
                             }
                             .scaledToFit()
                             .padding(.leading, 40)
                             .padding(.trailing, 40)
-                            
                             TextField("Username (Email Address)", text: $username)
+                                .padding(.leading, 16)
                                 .disableAutocorrection(true)
-                                .textContentType(.username)
-                                .padding()
-                                .background(Color.white)
+                                .textContentType(.emailAddress)
+                                .frame(width: 300, height: 50, alignment: .center)
+                                .background(Color.colorBackground)
                                 .cornerRadius(5.0)
-                                .padding(.bottom, 20)
-                                .padding(.leading, 20)
-                                .padding(.trailing, 20)
+                                .foregroundColor(.colorTextOnP)
+                                .keyboardType(.emailAddress)
                             SecureField("Password", text: $password)
+                                .padding(.leading, 16)
                                 .disableAutocorrection(true)
                                 .textContentType(.password)
-                                .padding()
-                                .background(Color.white)
+                                .frame(width: 300, height: 50, alignment: .center)
+                                .background(Color.colorBackground)
                                 .cornerRadius(5.0)
-                                .padding(.bottom, 20)
-                                .padding(.leading, 20)
-                                .padding(.trailing, 20)
+                                .foregroundColor(.colorTextOnP)
                             Button(action: {
                                 self.login(email: self.username, password: self.password)
                             }) {
@@ -75,7 +80,7 @@ struct LoginView: View {
                                     .frame(width: 220, height: 60)
                                     .background(Color.colorSecondary)
                                     .cornerRadius(15.0)
-                            }
+                            }.offset(CGSize(width: 0, height: 16))
                         }
                         Spacer()
                     }
@@ -84,6 +89,9 @@ struct LoginView: View {
                     .alert(isPresented: $showLoginError) {
                         Alert(title: Text(errorString))
                 }.onAppear(perform: readLoginStatus)
+                .onTapGesture {
+                    UIApplication.shared.endEditing()
+                }.edgesIgnoringSafeArea(.all)
                 
                 
             } else {
