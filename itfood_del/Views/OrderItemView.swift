@@ -143,7 +143,7 @@ struct QueueingOrderView: View {
                                 .cornerRadius(4)
                             
                             
-                            Text(order.address.info)
+                            Text(order.address?.info ?? "")
                                 .font(.footnote)
                                 .padding(8)
                             
