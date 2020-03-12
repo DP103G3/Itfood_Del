@@ -41,11 +41,26 @@ struct PasswordView: View {
                             .padding(20)
                     }.padding(20)
                    
-                    Button(action: {
-                                       
-                                   } ){
-                                       Text("送出")
-                                   }.animation(.default)
+                       
+                            VStack {
+                                Text("送出")
+                                    .font(.body)
+                                    .foregroundColor(Color.colorTextOnS)
+                                    .padding(8)
+                                    .background(Color.colorSecondary.cornerRadius(4))
+                            }
+                        
+
+                        
+//                    Button(action: {
+//
+//                                   } ){
+//                                       Text("送出")
+//                                        .font(.body)
+//                                        .foregroundColor(Color.colorTextOnS)
+//                                        .padding(8)
+//                                        .background(Color.colorSecondary.cornerRadius(4))
+//                                   }.animation(.default)
                     .padding(20)
                     
                      Spacer()
