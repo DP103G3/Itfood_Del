@@ -15,7 +15,7 @@ struct AboutView: View {
             Color.colorBackground
             ScrollView{
                 VStack{
-                    Image("logo")
+                    Image("logo").resizable().scaledToFill().frame(width: 280, height: 80, alignment: .center)
                     Text("DP103 G3")
                         .font(.largeTitle)
                         .foregroundColor(Color.colorTextOnP)
@@ -39,6 +39,7 @@ struct AboutView: View {
                     Spacer()
                 }
                 .navigationBarTitle("關於我們")
+                .offset(CGSize(width: 0, height: 16))
             }
         }
     }
