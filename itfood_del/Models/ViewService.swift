@@ -34,44 +34,53 @@ class ViewService: ObservableObject {
                 case .success(let message):
                     switch message {
                     case .string(let text):
-                        print(text)
+                        var count = 0;
+                        let textComponents = text.components(separatedBy: "order_state")
+                        textComponents.forEach { (string) in
+                            print("ORDER\(count): " + string)
+                            count += 1
+                        }
+                        let data = text.data(using: .utf8)
                         do {
-                            let data = text.data(using: .utf8)
-                            if let orders = try? self.decoder.decode([Order].self, from: data!){
-                                print(self.TAG + orders.description)
-                                let queueingOrders = orders.filter { (order) -> Bool in
-                                    (order.order_state == 1 || order.order_state == 2) && order.del_id == -1
-                                }
-                                let deliveringOrders = orders.filter({ (order) -> Bool in
-                                    order.order_state == 3 || ((order.order_state == 1 || order.order_state == 2) && (order.del_id == self.del_id))
-                                })
-                                self.queueingOrders = queueingOrders
-                                self.deliveringOrders = deliveringOrders
-                            } else if let deliveryMessage: DeliveryMessage = try? self.decoder.decode(DeliveryMessage.self, from: data!) {
-                                print(self.TAG + "DeliveryMessage: " + (deliveryMessage.action ?? ""))
-                                let action = deliveryMessage.action
-                                if action == "confirmOrder" {
-                                    self.objectWillChange.send()
-                                    self.showQRCodeSheet = false
-//                                    self.objectWillChange.send()
-                                    self.showAcceptSuccessAlert = true
-                                }
-                                let order = deliveryMessage.order
-                                for o: Order in self.deliveringOrders {
-                                    if o.order_id == order?.order_id {
-                                        let id = o.order_id
-                                        self.deliveringOrders = self.deliveringOrders.filter { (order) -> Bool in
-                                            order.order_id != id
-                                        }
-                                        self.deliveringOrders.append(order!)
+                            let orders = try self.decoder.decode([Order].self, from: data!)
+                            print(self.TAG + "Orders: " + (orders.debugDescription))
+                            let queueingOrders = orders.filter { (order) -> Bool in
+                                (order.order_state == 1 || order.order_state == 2) && order.del_id == -1
+                            }
+                            print(self.TAG + "queueingOrders: " + queueingOrders.debugDescription)
+                            let deliveringOrders = orders.filter({ (order) -> Bool in
+                                order.order_state == 3 || ((order.order_state == 1 || order.order_state == 2) && (order.del_id == self.del_id))
+                            })
+                            print(self.TAG + "deliveringOrders: " + deliveringOrders.debugDescription)
+                            self.queueingOrders = queueingOrders
+                            self.deliveringOrders = deliveringOrders
+                        }
+                        catch {
+                            print("ORDERS DECODING ERROR: " + error.localizedDescription)
+                        }
+                        do {
+                            let deliveryMessage: DeliveryMessage = try self.decoder.decode(DeliveryMessage.self, from: data!)
+                            print(self.TAG + "DeliveryMessage: " + (deliveryMessage.action ?? ""))
+                            let action = deliveryMessage.action
+                            if action == "confirmOrder" {
+                                self.objectWillChange.send()
+                                self.showQRCodeSheet = false
+                                //                                    self.objectWillChange.send()
+                                self.showAcceptSuccessAlert = true
+                            }
+                            let order = deliveryMessage.order
+                            for o: Order in self.deliveringOrders {
+                                if o.order_id == order?.order_id {
+                                    let id = o.order_id
+                                    self.deliveringOrders = self.deliveringOrders.filter { (order) -> Bool in
+                                        order.order_id != id
                                     }
+                                    self.deliveringOrders.append(order!)
                                 }
                             }
-                            
+                        } catch {
+                            print("DELIVERYMESSAGE DECODING ERROR: " + error.localizedDescription)
                         }
-//                        catch {
-//                            print(error)
-//                        }
                         
                     //                                print(orders.description)
                     default:
@@ -85,20 +94,20 @@ class ViewService: ObservableObject {
         //        service.sendFetchOrdersRequest()
     }
     
-//    private var confirmOrderPublisher: AnyPublisher<Bool, Never> {
-//        $confirmOrder
-//            .debounce(for: 0, scheduler: RunLoop.main)
-//            .removeDuplicates()
-//            .map { confirm in
-//                var showing = false
-//                if confirm {
-//                    showing = false
-//                } else {
-//                    showing = true
-//                }
-//                return showing
-//        }.eraseToAnyPublisher()
-//    }
+    //    private var confirmOrderPublisher: AnyPublisher<Bool, Never> {
+    //        $confirmOrder
+    //            .debounce(for: 0, scheduler: RunLoop.main)
+    //            .removeDuplicates()
+    //            .map { confirm in
+    //                var showing = false
+    //                if confirm {
+    //                    showing = false
+    //                } else {
+    //                    showing = true
+    //                }
+    //                return showing
+    //        }.eraseToAnyPublisher()
+    //    }
     
     private var connectToSocketPublisher: AnyPublisher<Bool, Never> {
         $connectToSocket
