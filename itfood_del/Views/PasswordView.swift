@@ -50,14 +50,28 @@ struct PasswordView: View {
                             .cornerRadius(5.0)
                     }.padding(20)
                    
-                    Button(action: {
-                                       
-                   } ){
-                       Text("送出")
-                   }.animation(.default)
-                    .padding(8)
-                    .background(Color.colorSecondary)
-                    .cornerRadius(4)
+                       
+                            VStack {
+                                Text("送出")
+                                    .font(.body)
+                                    .foregroundColor(Color.colorTextOnS)
+                                    .padding(8)
+                                    .background(Color.colorSecondary.cornerRadius(4))
+                            }
+                        
+
+                        
+//                    Button(action: {
+//
+//                                   } ){
+//                                       Text("送出")
+//                                        .font(.body)
+//                                        .foregroundColor(Color.colorTextOnS)
+//                                        .padding(8)
+//                                        .background(Color.colorSecondary.cornerRadius(4))
+//                                   }.animation(.default)
+                    .padding(20)
+                    
                      Spacer()
                 } .navigationBarTitle("修改密碼")
             }

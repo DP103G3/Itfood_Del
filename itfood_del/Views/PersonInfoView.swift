@@ -14,6 +14,7 @@ struct PersonInfoView: View {
     @State private var name = ""
     @State private var identityid = ""
     @State private var phone = ""
+    @State private var jointime = ""
     
     let url = URL(string: common_url + "/DeliveryServlet")
     var person: Person!
@@ -26,30 +27,42 @@ struct PersonInfoView: View {
                 HStack{
                     Text("外送員編號：")
                         .foregroundColor(Color.colorTextOnP)
-                    TextField("編號", text:$email).foregroundColor(.colorTextOnP)
+                    Text(String(id)).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
-                
+                HStack{
+                    Text("加入日期：")
+                        .foregroundColor(Color.colorTextOnP)
+                    Text("    "+String(jointime)).foregroundColor(.colorTextOnP)
+                    Spacer()
+                }.padding(20)
+                HStack{
+                    Text("外送員帳號：")
+                        .foregroundColor(Color.colorTextOnP)
+                    Text(email).foregroundColor(.colorTextOnP)
+                    Spacer()
+                }.padding(20)
                 HStack{
                     Text("外送員姓名：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("姓名", text:$name).foregroundColor(.colorTextOnP)
+                    Text(name).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("身分證字號：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("身分證字號", text:$identityid).foregroundColor(.colorTextOnP)
+                    Text(identityid).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
                 HStack{
                     Text("外送員電話：")
                     .foregroundColor(Color.colorTextOnP)
-                    TextField("電話", text:$phone).foregroundColor(.colorTextOnP)
+                    Text(phone).foregroundColor(.colorTextOnP)
                     Spacer()
                 }.padding(20)
+                Text("").padding(20)
                 NavigationLink(destination: PersonInfoUpdateView()) {
-                    HStack {
+                    VStack {
                         Text("修改資料")
                             .font(.body)
                             .foregroundColor(Color.colorTextOnS)
@@ -84,6 +97,7 @@ struct PersonInfoView: View {
                     self.name = person.del_name
                     self.identityid = person.del_identityid
                     self.phone = person.del_phone!
+                    self.jointime = person.del_jointime!
                 } catch {
                     print(error)
                 }
