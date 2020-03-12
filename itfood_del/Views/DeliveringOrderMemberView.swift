@@ -97,7 +97,7 @@ struct DeliveringOrderMemberView: View {
                     .cornerRadius(8)
                     .foregroundColor(.white)
                 Spacer()
-                Text(order.address.info)
+                Text(order.address?.info ?? "")
                     .foregroundColor(.colorNormalText)
                 Spacer()
             }.padding(.trailing)

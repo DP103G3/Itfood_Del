@@ -31,7 +31,7 @@ struct Order : Codable, Hashable{
     let order_time : Date?
     var order_ideal : Date?
     var order_delivery : Date?
-    let address: Address
+    let address: Address?
     let order_name : String
     let order_phone : String
     let order_ttprice : Int

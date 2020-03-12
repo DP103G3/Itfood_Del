@@ -122,7 +122,7 @@ struct MapView: UIViewRepresentable{
                 destinationAnnotation.subtitle = order.shop.address
                 mapView.addAnnotations([destinationAnnotation])
             } else if self.status == OrderStatus.deliveryingMember.rawValue {
-                destinationAnnotation.title = order.address.info
+                destinationAnnotation.title = order.address!.info
                 mapView.addAnnotations([destinationAnnotation])
             }
             
@@ -160,11 +160,11 @@ struct MapView: UIViewRepresentable{
             mapItems["shop"] = shopMapItem
             
             var destinationMapItem = MKMapItem()
-            let destinationLat = order.address.latitude
-            let destinationLong = order.address.longitude
+            let destinationLat = order.address?.latitude ?? 0
+            let destinationLong = order.address?.longitude ?? 0
             let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
             let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
-            let destinationName = order.address.info
+            let destinationName = order.address?.info ?? ""
             let destinationPhone = order.order_phone
             destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
             destinationMapItem.name = destinationName
@@ -205,11 +205,11 @@ struct MapView: UIViewRepresentable{
             mapItems["currentPosition"] = currentMapItem
             
             var destinationMapItem = MKMapItem()
-            let destinationLat = order.address.latitude
-            let destinationLong = order.address.longitude
+            let destinationLat = order.address?.latitude ?? 0 
+            let destinationLong = order.address?.longitude ?? 0
             let destinationCoordinate = CLLocationCoordinate2D(latitude: destinationLat, longitude: destinationLong)
             let destinationPlaceMark = MKPlacemark(coordinate: destinationCoordinate)
-            let destinationName = order.address.info
+            let destinationName = order.address?.info
             let destinationPhone = order.order_phone
             destinationMapItem = MKMapItem(placemark: destinationPlaceMark)
             destinationMapItem.name = destinationName
