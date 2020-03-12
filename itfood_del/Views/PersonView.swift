@@ -25,14 +25,14 @@ struct PersonView: View {
 							.foregroundColor(Color.colorTextOnP)
 					}
 				}.listRowBackground(Color.colorItemBackground)
-				NavigationLink(destination: PasswordView()) {
-					HStack {
-						Image("lock")
-						Text("修改密碼")
-							.font(.body)
-							.foregroundColor(Color.colorTextOnP)
-					}
-				}.listRowBackground(Color.colorItemBackground)
+//				NavigationLink(destination: PasswordView()) {
+//					HStack {
+//						Image("lock")
+//						Text("修改密碼")
+//							.font(.body)
+//							.foregroundColor(Color.colorTextOnP)
+//					}
+//				}.listRowBackground(Color.colorItemBackground)
 				NavigationLink(destination: InformationView()) {
 					HStack {
 						Image("question")

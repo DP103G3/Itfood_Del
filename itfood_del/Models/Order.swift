@@ -9,8 +9,8 @@
 import Foundation
 
 
-//let ipAddress: String = "172.20.10.2"
-let ipAddress: String = "127.0.0.1"
+let ipAddress: String = "172.20.10.2"
+//let ipAddress: String = "127.0.0.1"
 //let ipAddress: String = "192.168.43.134"
 let url = "http://\(ipAddress)/Itfood_Web/del"
 

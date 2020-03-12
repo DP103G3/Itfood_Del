@@ -61,15 +61,15 @@ struct PersonInfoView: View {
                     Spacer()
                 }.padding(20)
                 Text("").padding(20)
-                NavigationLink(destination: PersonInfoUpdateView()) {
-                    VStack {
-                        Text("修改資料")
-                            .font(.body)
-                            .foregroundColor(Color.colorTextOnS)
-                            .padding(8)
-                            .background(Color.colorSecondary.cornerRadius(4))
-                    }
-                }
+//                NavigationLink(destination: PersonInfoUpdateView()) {
+//                    VStack {
+//                        Text("修改資料")
+//                            .font(.body)
+//                            .foregroundColor(Color.colorTextOnS)
+//                            .padding(8)
+//                            .background(Color.colorSecondary.cornerRadius(4))
+//                    }
+//                }
                 Spacer()
             }
             .navigationBarTitle("個人資料")
