@@ -35,7 +35,6 @@
 		CD65E64D241160B500AE8AD5 /* DeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E647241160B500AE8AD5 /* DeliveryView.swift */; };
 		CD65E64E241160B500AE8AD5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E648241160B500AE8AD5 /* LoginView.swift */; };
 		CD65E650241160B500AE8AD5 /* OrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64A241160B500AE8AD5 /* OrderItemView.swift */; };
-		CD65E651241160B500AE8AD5 /* PastOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */; };
 		CD65E652241160B500AE8AD5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E64C241160B500AE8AD5 /* MapView.swift */; };
 		CD65E6542411613600AE8AD5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E6532411613600AE8AD5 /* LocationManager.swift */; };
 		CD65E6562411614500AE8AD5 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD65E6552411614500AE8AD5 /* Order.swift */; };
@@ -77,7 +76,6 @@
 		CD65E647241160B500AE8AD5 /* DeliveryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeliveryView.swift; sourceTree = "<group>"; };
 		CD65E648241160B500AE8AD5 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		CD65E64A241160B500AE8AD5 /* OrderItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItemView.swift; sourceTree = "<group>"; };
-		CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastOrdersView.swift; sourceTree = "<group>"; };
 		CD65E64C241160B500AE8AD5 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CD65E6532411613600AE8AD5 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CD65E6552411614500AE8AD5 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				CD65E648241160B500AE8AD5 /* LoginView.swift */,
 				CD65E64C241160B500AE8AD5 /* MapView.swift */,
 				CD65E64A241160B500AE8AD5 /* OrderItemView.swift */,
-				CD65E64B241160B500AE8AD5 /* PastOrdersView.swift */,
 				CD65E6452411604300AE8AD5 /* ContentView.swift */,
 				BB451CF7240F56B1002525B9 /* OrderItemViewModel.swift */,
 				F52360CD241554AE001974A2 /* PersonView.swift */,
@@ -148,7 +145,6 @@
 				F52360DD2416CFC4001974A2 /* PersonInfoUpdateView.swift */,
 				BBDC4540241615AE00C81B89 /* DeliveringOrderShopView.swift */,
 				BBDC4542241615E000C81B89 /* DeliveringOrderMemberView.swift */,
-
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -291,7 +287,6 @@
 				CD65E6462411604300AE8AD5 /* ContentView.swift in Sources */,
 				CD65E6442411601400AE8AD5 /* Data.swift in Sources */,
 				F52360D824159533001974A2 /* AboutView.swift in Sources */,
-				CD65E651241160B500AE8AD5 /* PastOrdersView.swift in Sources */,
 				CD65E652241160B500AE8AD5 /* MapView.swift in Sources */,
 				CD65E64224115FEF00AE8AD5 /* Color.swift in Sources */,
 				CD65E64D241160B500AE8AD5 /* DeliveryView.swift in Sources */,
