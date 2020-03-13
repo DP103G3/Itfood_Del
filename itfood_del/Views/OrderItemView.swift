@@ -146,7 +146,7 @@ struct QueueingOrderView: View {
                             
                             
                             Text(order.address?.info ?? "")
-                            .foregroundColor(.colorNormalText)
+                                .foregroundColor(.colorNormalText)
                                 .font(.footnote)
                                 .padding(8)
                             

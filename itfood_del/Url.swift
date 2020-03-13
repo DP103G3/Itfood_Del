@@ -8,5 +8,7 @@
 
 import Foundation
 
-let common_url = "http://172.20.10.2:8080/Itfood_Web"
+
+let ipAddress: String = "172.20.10.2"
+let common_url = "http://\(ipAddress):8080/Itfood_Web"
 

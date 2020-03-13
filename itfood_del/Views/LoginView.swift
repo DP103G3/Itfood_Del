@@ -85,6 +85,17 @@ struct LoginView: View {
                         Spacer()
                     }
                     Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            self.username = "delivery2020@gmail.com"
+                            self.password = "123456789"
+                        }) {
+                            Text("外送員")
+                        }
+                        .offset(CGSize(width: -16, height: -16))
+                        .foregroundColor(.colorTextOnP)
+                    }
                 }.background(Color.colorPrimary)
                     .alert(isPresented: $showLoginError) {
                         Alert(title: Text(errorString))
